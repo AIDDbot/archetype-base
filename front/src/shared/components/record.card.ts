@@ -1,19 +1,11 @@
 import { PlatformElement } from "./platform.element.ts";
-import { createBadge, createFacts, createStatus } from "./record.facts.ts";
+import { createBadge, createFacts, createFooterLinks, createStatus } from "./record.facts.ts";
 import type { RecordCardDescription, RecordLink } from "../record.type.ts";
 
 const skeleton = document.createElement("template");
 skeleton.innerHTML =
   '<article class="record-card" aria-busy="true"><header><h2></h2></header><div class="record-body"></div><footer></footer></article>';
 
-function createFooterLinks(links: readonly RecordLink[]) {
-  return links.map((entry) => {
-    const link = document.createElement("a");
-    link.href = entry.href;
-    link.textContent = entry.label;
-    return link;
-  });
-}
 export class RecordCard extends PlatformElement {
   private piece(selector: string) {
     const element = this.querySelector<HTMLElement>(selector);

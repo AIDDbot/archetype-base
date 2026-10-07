@@ -29,14 +29,15 @@ export async function renderHealthCard(context: PageContext) {
 }
 export async function renderHealthPage(context: PageContext) {
   const detail = createRecordDetail();
-  detail.loading(title);
+  detail.loading(title, []);
   context.outlet.append(detail);
   const state = await loadHealth(context);
-  if (state.status !== "loaded") return detail.fail(title, unavailable);
+  if (state.status !== "loaded") return detail.fail({ title, message: unavailable, links: [] });
   detail.show({
     title,
     subtitle: "The state of the back-api",
     state: state.health.status,
     sections: [{ heading: "Service", facts: healthFacts(state.health) }],
+    links: [],
   });
 }

@@ -48,6 +48,7 @@ export function mount(context: PageContext) {
         ],
       },
     ],
+    links: [],
   });
   detail.addSection("Technology", createTechnologyTable());
   page.append(detail);

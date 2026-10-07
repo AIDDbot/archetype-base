@@ -1,5 +1,5 @@
 import { formatFact, missingValue } from "../record.format.ts";
-import type { Fact } from "../record.type.ts";
+import type { Fact, RecordLink } from "../record.type.ts";
 
 function createLink(fact: Fact) {
   const link = document.createElement("a");
@@ -18,6 +18,14 @@ function createValue(fact: Fact) {
   if (isLink) value.append(createLink(fact));
   else value.textContent = text;
   return value;
+}
+export function createFooterLinks(links: readonly RecordLink[]) {
+  return links.map((entry) => {
+    const link = document.createElement("a");
+    link.href = entry.href;
+    link.textContent = entry.label;
+    return link;
+  });
 }
 export function createFacts(facts: readonly Fact[]) {
   const list = document.createElement("dl");

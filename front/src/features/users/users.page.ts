@@ -18,19 +18,21 @@ function describeAccount(account: Account) {
         ],
       },
     ],
+    links: [],
   } as const;
 }
 export async function mount(context: PageContext) {
   const detail = createRecordDetail();
-  detail.loading("Account");
+  detail.loading("Account", []);
   context.outlet.append(detail);
   const id = context.parameters.id;
   if (id === undefined) throw new Error("Account id parameter is missing");
   const client = createAccountClient(context.services.http);
   const state = await createAccountStore(client).load({ value: id });
   if (state.status === "loaded") return detail.show(describeAccount(state.account));
-  detail.fail(
-    "Account",
-    state.status === "not-found" ? "Account not found" : "Account unavailable",
-  );
+  detail.fail({
+    title: "Account",
+    message: state.status === "not-found" ? "Account not found" : "Account unavailable",
+    links: [],
+  });
 }

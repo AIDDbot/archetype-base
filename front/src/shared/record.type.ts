@@ -29,6 +29,12 @@ export interface RecordDetailDescription {
   readonly subtitle?: string;
   readonly state?: string;
   readonly sections: readonly RecordSection[];
+  readonly links: readonly RecordLink[];
+}
+export interface RecordFailure {
+  readonly title: string;
+  readonly message: string;
+  readonly links: readonly RecordLink[];
 }
 export interface RecordColumn {
   readonly key: string;
