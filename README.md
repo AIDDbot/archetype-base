@@ -32,12 +32,12 @@ cd front && npm ci && cd ..
 cd e2e && npm ci && npx playwright install chromium && cd ..
 ```
 
-In each project: `npm run lint`, `npm run unit`, `npm run quality` and `npm run format`. Start the back with `npm start` in `back/` (port 3000) and the front with `npm start` in `front/` (port 4000). Copy `.env.example` to `.env` to change a setting.
+In each project: `npm test` (unit tests in `back` and `front`, acceptance in `e2e`), `npm run lint`, `npm run quality` and `npm run format`. Start the back with `npm start` in `back/` (port 3000) and the front with `npm start` in `front/` (port 4000). Copy `.env.example` to `.env` to change a setting.
 
 The acceptance suite starts the back and the front itself:
 
 ```sh
-cd e2e && npm run acceptance
+cd e2e && npm test
 ```
 
 ## Contribute

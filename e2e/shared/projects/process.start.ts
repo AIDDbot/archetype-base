@@ -19,7 +19,7 @@ const commands: CommandRuntime = { start: startCommand, stop: stopCommand };
 const stopTimeout = 5000;
 
 function isCustomCommand(settings: ProjectSettings) {
-  return Boolean(settings.command && settings.command !== "npm run start");
+  return Boolean(settings.command && settings.command !== "npm start");
 }
 function createEnvironment(settings: ProjectSettings, temporary: string) {
   const environment = { ...process.env, ...settings.environment };

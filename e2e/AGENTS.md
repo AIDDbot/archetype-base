@@ -23,8 +23,10 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 | `upgrade`    | No     | `npm run upgrade`                  | npm-check-updates and npm install                               |
 | `unit`       | Yes    | `npm run unit`                     | node --test lifecycle checks                                    |
 | `start`      | No     | n/a: the suite starts its projects | n/a                                                             |
-| `acceptance` | Yes    | `npm run acceptance`               | Playwright                                                      |
+| `acceptance` | Yes    | `npm test`                         | Playwright                                                      |
 | `quality`    | No     | `npm run quality`                  | oxlint with Blueprint complexity limits                         |
+
+`npm start` opens the interactive Playwright UI. It is for a human only: an agent never runs it, because it does not stop.
 
 ## 4 · Architecture
 
@@ -141,4 +143,4 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 - **Needs**: back and front.
 - **Gives to**: delivery verification.
 - **Port**: n/a: suite is not a server.
-- **Environment variables**: `BACK_DIRECTORY` = ../back; `BACK_PORT` = 3000; `BACK_START` = npm run start; `FRONT_DIRECTORY` = ../front; `FRONT_PORT` = 4000; `FRONT_START` = npm run start; `E2E_STARTUP_TIMEOUT_MS` = 15000. Without a project port setting, start it without PORT.
+- **Environment variables**: `BACK_DIRECTORY` = ../back; `BACK_PORT` = 3000; `BACK_START` = npm start; `FRONT_DIRECTORY` = ../front; `FRONT_PORT` = 4000; `FRONT_START` = npm start; `E2E_STARTUP_TIMEOUT_MS` = 15000. Without a project port setting, start it without PORT.

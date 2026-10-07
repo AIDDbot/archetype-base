@@ -21,8 +21,8 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 | `lint`       | Yes    | `npm run lint`           | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
 | `format`     | No     | `npm run format`         | oxfmt                                                           |
 | `upgrade`    | No     | `npm run upgrade`        | npm-check-updates and npm install                               |
-| `unit`       | Yes    | `npm run unit`           | node --test                                                     |
-| `start`      | No     | `npm run start`          | Node.js                                                         |
+| `unit`       | Yes    | `npm test`               | node --test                                                     |
+| `start`      | No     | `npm start`              | Node.js                                                         |
 | `acceptance` | Yes    | n/a: e2e owns acceptance | n/a                                                             |
 | `quality`    | No     | `npm run quality`        | oxlint with Blueprint complexity limits                         |
 

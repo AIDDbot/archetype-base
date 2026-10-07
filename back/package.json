@@ -11,7 +11,7 @@
     "lint": "oxlint src",
     "format": "oxfmt .",
     "upgrade": "ncu -u && npm install",
-    "unit": "node --test src/**/*.test.ts",
+    "test": "node --test src/**/*.test.ts",
     "quality": "oxlint -c .oxlint.quality.json src"
   },
   "dependencies": {

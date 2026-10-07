@@ -23,7 +23,7 @@ export function readSuiteSettings() {
       kind,
       port,
       directory: resolve(directory, process.env[`${prefix}_DIRECTORY`] ?? `../${kind}`),
-      command: process.env[`${prefix}_START`] ?? "npm run start",
+      command: process.env[`${prefix}_START`] ?? "npm start",
       environment: suppliedPort === undefined ? {} : { PORT: suppliedPort },
     };
   });
