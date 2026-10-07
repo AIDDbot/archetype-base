@@ -46,7 +46,7 @@ async function expectAnonymous(page: Page) {
 }
 test(
   "login immediately shows own profile on both surfaces",
-  { tag: "@S0019-R01" },
+  { tag: ["@S0006-R08", "@S0006-R14"] },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await loginFromHome(page, request, { backUrl, frontUrl });
     await expectSignedIn(page, user.id);
@@ -59,7 +59,7 @@ test(
 );
 test(
   "auth card greeting is the only link to the own account",
-  { tag: "@S0024-R01" },
+  { tag: "@S0006-R14" },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await loginFromHome(page, request, { backUrl, frontUrl });
     const card = page.getByRole("article", { name: "Authentication" });
@@ -70,7 +70,7 @@ test(
 );
 test(
   "both own profile links navigate without document reload",
-  { tag: "@S0019-R02" },
+  { tag: ["@S0006-R08", "@S0006-R14"] },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await loginFromHome(page, request, { backUrl, frontUrl });
     for (const selector of ["article[aria-label=Authentication]", "nav"]) {
@@ -90,7 +90,7 @@ test(
 );
 test(
   "valid restored session retains both own profile links",
-  { tag: "@S0019-R03" },
+  { tag: "@S0006-R08" },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await loginFromHome(page, request, { backUrl, frontUrl });
     await page.reload();
@@ -99,7 +99,7 @@ test(
 );
 test(
   "completed logout updates both surfaces to anonymous",
-  { tag: "@S0019-R04" },
+  { tag: "@S0006-R12" },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await loginFromHome(page, request, { backUrl, frontUrl });
     await expectSignedIn(page, user.id);
@@ -109,7 +109,7 @@ test(
 );
 test(
   "rejected restored session removes both own profile links",
-  { tag: "@S0019-R05" },
+  { tag: "@S0006-R07" },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await loginFromHome(page, request, { backUrl, frontUrl });
     await expectSignedIn(page, user.id);

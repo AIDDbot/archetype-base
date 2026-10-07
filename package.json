@@ -2,7 +2,7 @@
   "name": "archetype-base",
   "displayName": "Archetype Base",
   "description": "Reference archetypes that follow the AIDDbot Blueprint: a back-end API, a web front end and an acceptance suite.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "license": "MIT",
   "author": "AIDDbot",

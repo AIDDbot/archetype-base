@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 
 test(
   "unexpected failures distinguish safe causes without secret attachments or client internals",
-  { tag: ["@S0011-R01", "@S0011-R02", "@S0011-R03"] },
+  { tag: "@S0002-R02" },
   async ({ request }) => {
     const directory = await mkdtemp(join(tmpdir(), "error-diagnostics-"));
     const port = await freePort();

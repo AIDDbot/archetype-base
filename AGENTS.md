@@ -20,7 +20,7 @@ Reference archetypes that follow the AIDDbot Blueprint. Each project folder is o
 
 The front gets data only from the back. The e2e suite uses the API and the browser screens. The identity of a system (`displayName`, `description`, `author`, `homepage`, `version`) is in the root `package.json`; the front and the suite read it from there.
 
-All archetypes implement the AIDDbot foundation specs: `configuration`, `monitoring`, `layout`, `health`, `basic-auth`, `account`, `about` and `record-views`. They carry no business feature.
+All archetypes implement the AIDDbot foundation specs. `foundation/` holds the instance of each spec for this system: `S0001-configuration`, `S0002-monitoring`, `S0003-layout`, `S0004-health`, `S0005-basic-auth`, `S0006-account`, `S0007-about` and `S0008-record-views`, in the delivery order of AIDDbot. Each acceptance test has the tag of its requirement (`@S0001-R01`). A system that starts from these archetypes gets the same spec IDs, so the tags stay correct. The archetypes carry no business feature.
 
 ## Blueprint
 
@@ -87,10 +87,11 @@ An archetype enters or changes in this repository only when all of these are tru
 
 - `lint`, `unit` and `quality` pass in each project, and `quality` reports no warning.
 - The full acceptance run of `e2e` passes against the reference `back` and `front`.
+- Each requirement in `foundation/` has a test with its tag, and each tag names a requirement in `foundation/`.
 - The archetype has no open technical debt. Debt in an archetype goes into each system that starts from it.
 - A boundary canary fails `lint`: a `logic` file that imports a `presentation` file of the same feature. Undo the canary.
 
-A new archetype of a type (for example a different `front-web`) passes the same `e2e` suite with the reference archetypes of the other types. Change the suite only when the foundation specs change.
+A new archetype of a type (for example a different `front-web`) passes the same `e2e` suite with the reference archetypes of the other types. Change the suite only when the foundation specs change: first change the instance in `foundation/`, then the tests, then the code.
 
 ## Git
 

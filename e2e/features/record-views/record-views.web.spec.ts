@@ -36,7 +36,7 @@ function hasNoHorizontalScroll(page: Page) {
 
 test(
   "each home card has a heading, label and value pairs and a footer link",
-  { tag: "@S0020-R01" },
+  { tag: "@S0008-R01" },
   async ({ page, frontUrl }) => {
     await page.goto(frontUrl);
     const cards = page.locator("record-card article");
@@ -51,7 +51,7 @@ test(
 );
 test(
   "detail pages show a page header and sections of label and value pairs",
-  { tag: "@S0020-R02" },
+  { tag: "@S0008-R02" },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await signIn(page, request, backUrl);
     for (const path of ["/health", "/about", `/users/${user.id}`]) {
@@ -65,7 +65,7 @@ test(
 );
 test(
   "a loading view is busy and shows no fact",
-  { tag: "@S0020-R03" },
+  { tag: "@S0008-R03" },
   async ({ page, frontUrl }) => {
     await delayHealth(page);
     await page.goto(frontUrl + "/health");
@@ -78,7 +78,7 @@ test(
 );
 test(
   "a view that cannot load keeps its title and footer link",
-  { tag: "@S0020-R04" },
+  { tag: "@S0008-R04" },
   async ({ page, frontUrl }) => {
     await page.route("**/api/health", (route) => route.abort());
     await page.goto(frontUrl);
@@ -91,7 +91,7 @@ test(
 );
 test(
   "a record state shows as a badge with text",
-  { tag: "@S0020-R05" },
+  { tag: "@S0008-R05" },
   async ({ page, frontUrl }) => {
     await page.goto(frontUrl + "/health");
     await expect(recordView(page.locator("record-detail")).state).toHaveText("ok");
@@ -103,7 +103,7 @@ test(
 );
 test(
   "dates, durations and numbers show in a form that a person reads",
-  { tag: "@S0020-R06" },
+  { tag: "@S0008-R06" },
   async ({ page, request, backUrl, frontUrl }) => {
     const user = await signIn(page, request, backUrl);
     await page.goto(frontUrl + "/health");
@@ -118,7 +118,7 @@ test(
 );
 test(
   "cards are one column on a narrow screen and several on a wide one",
-  { tag: "@S0020-R07" },
+  { tag: "@S0008-R07" },
   async ({ page, frontUrl }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(frontUrl);
@@ -132,7 +132,7 @@ test(
 );
 test(
   "labels and values keep AA contrast in both themes",
-  { tag: "@S0020-R08" },
+  { tag: "@S0008-R08" },
   async ({ page, frontUrl }) => {
     for (const theme of ["light", "dark"]) {
       await page.goto(frontUrl + "/health");
@@ -153,7 +153,7 @@ test(
 );
 test(
   "a list of records shows as a table with caption, headers and rows",
-  { tag: "@S0020-R09" },
+  { tag: "@S0008-R09" },
   async ({ page, frontUrl }) => {
     await page.goto(frontUrl + "/about");
     const table = recordTable(page.locator("record-table"));
@@ -165,7 +165,7 @@ test(
 );
 test(
   "a table scrolls in its own area on a narrow screen",
-  { tag: "@S0020-R10" },
+  { tag: "@S0008-R10" },
   async ({ page, frontUrl }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(frontUrl + "/about");

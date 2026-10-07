@@ -7,7 +7,7 @@ test(
   async ({ page, frontUrl }) => {
     await page.goto(frontUrl + "/health");
     const health = healthPage(page);
-    // S0020-R01, R02 replace the one-line text with a state badge and label and value pairs.
+    // S0008-R01, R02 replace the one-line text with a state badge and label and value pairs.
     await expect(health.content.locator(".record-badge")).toHaveText("ok");
     await expect(health.content).toContainText(/Runs\s*\d+.*Uptime\s*\d+\s*\w+/);
     await expect(
@@ -29,7 +29,7 @@ test(
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(frontUrl);
     const card = healthCard(page);
-    // S0020-R01 replaces the one-line text with a state badge and label and value pairs.
+    // S0008-R01 replaces the one-line text with a state badge and label and value pairs.
     await expect(card.content.locator(".record-badge")).toHaveText("ok");
     await expect(card.content).toContainText(/Runs\s*\d+.*Uptime\s*\d+\s*\w+/);
     await expect(card.link).toHaveAttribute("href", "/health");
