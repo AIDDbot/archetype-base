@@ -24,7 +24,7 @@ All archetypes implement the AIDDbot foundation specs. `foundation/` holds the i
 
 ## Blueprint
 
-<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.2.9. Never change it here: change it in AIDDbot and copy it again. -->
+<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.0 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
 
 All projects obey these principles. A project `AGENTS.md` gives only its own data and the limits that its archetype changes. Do not explore the code to learn the setup. First make it work, then make it correct: only `lint`, `unit`, acceptance and a security finding block a delivery. Any other violation is debt.
 
@@ -92,6 +92,12 @@ An archetype enters or changes in this repository only when all of these are tru
 - A boundary canary fails `lint`: a `logic` file that imports a `presentation` file of the same feature. Undo the canary.
 
 A new archetype of a type (for example a different `front-web`) passes the same `e2e` suite with the reference archetypes of the other types. Change the suite only when the foundation specs change: first change the instance in `foundation/`, then the tests, then the code.
+
+## Versions
+
+- The major and the minor version, and the `codename` of the root `package.json`, are the same as the AIDDbot release whose Blueprint this repository obeys. Change them only when that AIDDbot release copies its Blueprint here.
+- A fix that keeps the Blueprint is a patch version. Patch versions are independent of AIDDbot.
+- Each version has a tag `v{version}`. Never move a published tag.
 
 ## Git
 

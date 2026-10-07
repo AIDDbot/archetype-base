@@ -22,6 +22,10 @@ npx degit AIDDbot/archetype-base/back back
 
 Then put the identity of your system in the root `package.json` (`displayName`, `description`, `author`, `homepage`, `version`). The front and the e2e suite read it from there.
 
+## Versions
+
+Archetype Base follows the versions of AIDDbot. The major and the minor version, and the codename, are the same as the AIDDbot release whose Blueprint the archetypes obey: `v0.3.0` (Columbus) obeys AIDDbot 0.3.0. Patch versions are independent. Each AIDDbot release pins the exact tag that it validated. Use that tag in the copy command, for example `npx degit AIDDbot/archetype-base/back#v0.3.0 back`.
+
 ## Run the archetypes
 
 Requirements: Node.js 24 or later.
