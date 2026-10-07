@@ -1,0 +1,26 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "acceptance": "playwright test",
+    "lint": "oxlint .",
+    "format": "oxfmt .",
+    "upgrade": "ncu -u && npm install",
+    "unit": "node --test core/**/*.test.ts",
+    "quality": "oxlint -c .oxlint.quality.json ."
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "npm-check-updates": "^23.1.0",
+    "oxfmt": "^0.72.0",
+    "oxlint": "^1.87.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "typescript": "^7.0.2"
+  }
+}

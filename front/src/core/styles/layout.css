@@ -1,0 +1,12 @@
+body { padding: 1rem; }
+application-shell { display: block; }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+  & > article { margin-bottom: 0; }
+}
+@media (max-width: 40rem) {
+  nav { flex-wrap: wrap; }
+  .card-grid { grid-template-columns: 1fr; }
+}

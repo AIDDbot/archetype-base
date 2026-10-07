@@ -1,0 +1,14 @@
+{
+  "name": "archetype-base",
+  "displayName": "Archetype Base",
+  "description": "Reference archetypes that follow the AIDDbot Blueprint: a back-end API, a web front end and an acceptance suite.",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "author": "AIDDbot",
+  "homepage": "https://aiddbot.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AIDDbot/archetype-base.git"
+  }
+}

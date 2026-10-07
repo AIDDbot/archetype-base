@@ -1,0 +1,30 @@
+{
+  "name": "front",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.ts",
+    "build": "vite build",
+    "lint": "oxlint src server.ts",
+    "format": "oxfmt .",
+    "upgrade": "ncu -u && npm install",
+    "unit": "node --test src/**/*.test.ts",
+    "quality": "oxlint -c .oxlint.quality.json src server.ts"
+  },
+  "dependencies": {
+    "@fontsource/anonymous-pro": "^5.3.0",
+    "@fontsource/audiowide": "^5.3.0",
+    "@fontsource/roboto": "^5.3.0",
+    "@picocss/pico": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "npm-check-updates": "^23.1.0",
+    "oxfmt": "^0.72.0",
+    "oxlint": "^1.87.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.3"
+  }
+}

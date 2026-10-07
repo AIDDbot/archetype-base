@@ -1,0 +1,6 @@
+{
+  "extends": ["./.oxlint.boundaries.json"],
+  "plugins": ["typescript", "import"],
+  "options": { "typeAware": true, "typeCheck": true },
+  "ignorePatterns": ["node_modules"]
+}

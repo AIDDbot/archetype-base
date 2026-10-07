@@ -1,0 +1,12 @@
+{
+  "extends": ["./.oxlint.boundaries.json"],
+  "plugins": ["typescript", "import"],
+  "options": { "typeAware": true, "typeCheck": true },
+  "ignorePatterns": ["node_modules"],
+  "overrides": [
+    {
+      "files": ["shared/fixtures.ts"],
+      "rules": { "eslint/no-empty-pattern": "off" }
+    }
+  ]
+}

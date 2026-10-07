@@ -1,0 +1,1 @@
+CREATE TABLE runs (id INTEGER PRIMARY KEY, started_at TEXT NOT NULL);

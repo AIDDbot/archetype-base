@@ -1,0 +1,76 @@
+/* Record views: cards, detail pages and tables (S0020). Tokens only. */
+.record-card,
+.record-detail {
+  & > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    & h1,
+    & h2 {
+      margin: 0;
+    }
+    & hgroup {
+      margin: 0;
+    }
+  }
+}
+.record-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 0;
+  & > .record-body {
+    flex: 1;
+  }
+  & > footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+.record-detail > header {
+  margin-bottom: var(--pico-typography-spacing-vertical);
+}
+.record-facts {
+  display: grid;
+  grid-template-columns: minmax(6rem, max-content) 1fr;
+  gap: 0.35rem 1rem;
+  margin: 0;
+  & dt {
+    color: var(--pico-muted-color);
+    font-weight: 600;
+  }
+  & dd {
+    margin: 0;
+    color: var(--pico-color);
+    overflow-wrap: anywhere;
+  }
+}
+.record-badge {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--pico-primary);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pico-color);
+  font-size: 0.85em;
+  font-weight: 600;
+}
+.record-table {
+  margin: 0;
+  overflow-x: auto;
+  & caption {
+    text-align: start;
+    color: var(--pico-muted-color);
+  }
+  & .record-end {
+    text-align: end;
+  }
+}
+record-card,
+record-detail,
+record-table {
+  display: block;
+}
