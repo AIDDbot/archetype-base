@@ -64,31 +64,21 @@ src/
 
 ### Shared primitives
 
-| Primitive                              | Contract                                                           | Path                                  |
-| -------------------------------------- | ------------------------------------------------------------------ | ------------------------------------- |
-| `Email(value)`                         | Check non-empty text. Normalize lower case.                        | `src/shared/email.value.ts`           |
-| `requireText(input)`                   | Trim non-empty text or raise field errors.                         | `src/shared/text.check.ts`            |
+The index of `shared`. Read it before you write a check or a conversion. Add each primitive that two or more features use. A helper of one feature has no row.
+
+| Primitive | Contract | Path |
+| --- | --- | --- |
+| `Email(value)` | Check non-empty text. Normalize lower case. | `src/shared/email.value.ts` |
+| `requireText(input)` | Trim non-empty text or raise field errors. | `src/shared/text.check.ts` |
 | `RouteRegistration`, `SessionResolver` | Explicit route visibility and opaque session resolution contracts. | `src/shared/http/application.type.ts` |
-
-| Primitive                                    | Contract                                                | Path                                  |
-| -------------------------------------------- | ------------------------------------------------------- | ------------------------------------- |
 | `ApplicationServices`, `FeatureRegistration` | Inject the database into explicit feature registration. | `src/shared/http/application.type.ts` |
-
-| Primitive                | Contract                                        | Path                        |
-| ------------------------ | ----------------------------------------------- | --------------------------- |
-| `ExpectedError(details)` | Status, message and optional field errors.      | `src/shared/error.type.ts`  |
-| `Logger`                 | Write a level and message. Flush pending lines. | `src/shared/logger.type.ts` |
-| `LogLevel`               | Closed set: debug, info, warn, error.           | `src/shared/logger.type.ts` |
-
-The index of `shared`. Read it before you write a check or a conversion. Add each primitive when its foundation spec needs it.
-
-| Primitive                   | Contract                                                       | Path                                   |
-| --------------------------- | -------------------------------------------------------------- | -------------------------------------- |
-| `parseInteger(input)`       | Integer in the input range or an error that names the field.   | `src/shared/numbers.parse.ts`          |
-| `requireText(value, field)` | Text without end spaces or expected field error.               | `src/shared/text.check.ts`             |
-| `isRecord(value)`           | True for a key-value object.                                   | `src/shared/types.check.ts`            |
-| `readSetting(input)`        | Parse the supplied value or fallback. Propagate a parse error. | `src/shared/settings.read.ts`          |
-| `Database`                  | Prepare and execute SQL through an injected database contract. | `src/shared/database/database.type.ts` |
+| `ExpectedError(details)` | Status, message and optional field errors. | `src/shared/error.type.ts` |
+| `Logger` | Write a level and message. Flush pending lines. | `src/shared/logger.type.ts` |
+| `LogLevel` | Closed set: debug, info, warn, error. | `src/shared/logger.type.ts` |
+| `parseInteger(input)` | Integer in the input range or an error that names the field. | `src/shared/numbers.parse.ts` |
+| `isRecord(value)` | True for a key-value object. | `src/shared/types.check.ts` |
+| `readSetting(input)` | Parse the supplied value or fallback. Propagate a parse error. | `src/shared/settings.read.ts` |
+| `Database` | Prepare and execute SQL through an injected database contract. | `src/shared/database/database.type.ts` |
 
 ## 6 · Coding rules
 

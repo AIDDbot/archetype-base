@@ -64,7 +64,7 @@ src/
 
 ### Shared primitives
 
-The index of `shared`. Read it before you write a check or a conversion. Add each primitive when a spec needs it.
+The index of `shared`. Read it before you write a check or a conversion. Add each primitive that two or more features use. A helper of one feature has no row.
 
 | Primitive                                                                                                                     | Contract                                                                                                                                                                                                                                     | Path                                        |
 | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |

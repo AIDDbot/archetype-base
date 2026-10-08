@@ -24,9 +24,9 @@ All archetypes implement the AIDDbot foundation specs. `foundation/` holds the i
 
 ## Blueprint
 
-<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.0 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
+<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.4 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
 
-All projects obey these principles. A project `AGENTS.md` gives only its own data and the limits that its archetype changes. Do not explore the code to learn the setup. First make it work, then make it correct: only `lint`, `unit`, acceptance and a security finding block a delivery. Any other violation is debt.
+All projects obey these principles. A project `AGENTS.md` gives only its own data and the limits that its archetype changes. Do not explore the code to learn the setup. First make it work, then make it correct: only `lint`, `unit` and acceptance block a delivery, and a security finding gets one repair first. Any other violation is debt.
 
 ### System
 
@@ -70,11 +70,11 @@ All projects obey these principles. A project `AGENTS.md` gives only its own dat
 | Nesting depth | 2 | 4 |
 | Parameters of a function | 2 | 4 |
 | Lines in a file | 128 | 256 |
-| Entries in a folder | 16 | — |
+| Entries in a folder | 16 | 16 |
 
 - A callback whose signature the framework sets (such as a middleware) is outside the parameter limit: disable the limit for it with a lint comment. A folder over the limit has more than one concern: divide it by concern.
-- Strictest typed form of the language and its strictest type check. One type for each domain concept, never a bare string or number. A value object for a value with rules, made at the edge; it checks only what the spec states. A closed type for a closed set: an enum or a union of literals, as the type check permits. Composition, not inheritance. Generic types in `shared`, domain types in their feature.
-- DRY: `shared` has one function to check, convert or format each common type. Look there before you write one.
+- Strictest typed form of the language and its strictest type check. One type for each domain concept, never a bare string, number, object or array. A value object for a value with rules, made at the edge; it checks only what the spec states. A closed type for a closed set: an enum or a union of literals, as the type check permits. Composition, not inheritance. Generic types in `shared`, domain types in their feature.
+- DRY: `shared` has one function to check, convert or format each common type. Look there before you write one. `quality` reports each duplicated block of code as debt.
 - Names: idiomatic, words of the domain. A function is a verb. A boolean is a question (`isActive`, `canEdit`). No negative names, no abbreviations except standard ones.
 - Early returns; no `else` on the main path. A long or deep block: a function with a domain name. More than one logical operator: a named variable or predicate. More than two values: one typed object.
 - Errors: never hide them. Catch only at the edges: the error handler of `core`, and `data` when it changes an external failure into the expected error.

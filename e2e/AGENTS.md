@@ -62,62 +62,20 @@ shared/
 
 ### Shared primitives
 
-| Primitive                        | Contract                                                                       | Path                               |
-| -------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------- |
-| `startErrorHarness(environment)` | Controlled unexpected HTTP failures with captured output and awaited shutdown. | `shared/projects/error.fixture.ts` |
+The index of `shared`. Read it before you write a check or a conversion. Add each primitive that two or more features use. A helper of one feature has no row: its page object is `shared/page-objects/{feature}.page.ts`, and its test data is in `shared/test-data/`. The life cycle of the suite in `shared/projects/` has a row only for what the features use.
 
-| Primitive                          | Contract                                                                | Path                                  |
-| ---------------------------------- | ----------------------------------------------------------------------- | ------------------------------------- |
-| `stopProcessGroup(pid, boundary?)` | Terminate the owned group. Await group disappearance or report timeout. | `shared/projects/group.stop.ts`       |
-| `ProcessGroupBoundary`             | Inject group signals, wait and time for ownership verification.         | `shared/projects/group.stop.ts`       |
-| `controlledGroup(port, exitMode)`  | Real HTTP survivor with a controlled group signal boundary.             | `shared/projects/group.controlled.ts` |
-| `CommandRuntime`                   | Inject command startup and owned tree termination.                      | `shared/projects/process.start.ts`    |
-
-| Primitive                              | Contract                                                     | Path                                 |
-| -------------------------------------- | ------------------------------------------------------------ | ------------------------------------ |
-| `startCommand(command, options)`       | Start an owned Windows job or POSIX process group.           | `shared/projects/command.start.ts`   |
-| `stopCommand(child)`                   | Request Windows job cleanup or terminate a POSIX group.      | `shared/projects/command.start.ts`   |
-| `startBackend(directory, environment)` | Backend process with observed output, exit and IPC shutdown. | `shared/projects/backend.fixture.ts` |
-
-| Primitive         | Contract                                                                            | Path                                |
-| ----------------- | ----------------------------------------------------------------------------------- | ----------------------------------- |
-| `aboutPage(page)` | About content, release version, author, technology table and shared shell locators. | `shared/page-objects/about.page.ts` |
-
-| Primitive           | Contract                                          | Path                                  |
-| ------------------- | ------------------------------------------------- | ------------------------------------- |
-| `accountPage(page)` | Account fields, status and shared shell locators. | `shared/page-objects/account.page.ts` |
-
-| Primitive                      | Contract                                                   | Path                               |
-| ------------------------------ | ---------------------------------------------------------- | ---------------------------------- |
-| `authClient(request, baseUrl)` | Register, login and resolve the current user through HTTP. | `shared/auth.client.ts`            |
-| `uniqueCredentials()`          | Unique email and password for an isolated account.         | `shared/auth.client.ts`            |
-| `authPage(page)`               | Auth fields, submit, result and fill operation.            | `shared/page-objects/auth.page.ts` |
-
-| Primitive          | Contract                                           | Path                                 |
-| ------------------ | -------------------------------------------------- | ------------------------------------ |
-| `healthPage(page)` | Health content and shared shell locators.          | `shared/page-objects/health.page.ts` |
-| `healthCard(page)` | Health card, detail link and shared home locators. | `shared/page-objects/health.page.ts` |
-
-| Primitive            | Contract                                                 | Path                                 |
-| -------------------- | -------------------------------------------------------- | ------------------------------------ |
-| `shellPage(page)`    | Shell name, home menu link and theme control locators.   | `shared/page-objects/layout.page.ts` |
-| `homePage(page)`     | Home header, card grid and application version locators. | `shared/page-objects/layout.page.ts` |
-| `notFoundPage(page)` | Missing page heading, path and home link locators.       | `shared/page-objects/layout.page.ts` |
-
-| Primitive                     | Contract                                          | Path                    |
-| ----------------------------- | ------------------------------------------------- | ----------------------- |
+| Primitive | Contract | Path |
+| --- | --- | --- |
+| `authClient(request, baseUrl)` | Register, login and resolve the current user through HTTP. | `shared/auth.client.ts` |
+| `uniqueCredentials()` | Unique email and password for an isolated account. | `shared/auth.client.ts` |
+| `authPage(page)` | Auth fields, submit, result and fill operation. | `shared/page-objects/auth.page.ts` |
 | `expectError(body, message?)` | Check the uniform error body and optional fields. | `shared/error.check.ts` |
-
-The index of `shared`. Read it before you write a check or a conversion. Add each primitive when its foundation spec needs it.
-
-| Primitive                           | Contract                                                     | Path                               |
-| ----------------------------------- | ------------------------------------------------------------ | ---------------------------------- |
-| `uniqueValue(prefix)`               | A value no other test run uses.                              | `shared/test-data/unique.value.ts` |
-| `freePort()`                        | An unused local port.                                        | `shared/projects/port.find.ts`     |
-| `startProject(settings)`            | Isolated process, output, URL and stop operation.            | `shared/projects/process.start.ts` |
-| `waitForProject(instance, timeout)` | Wait for HTTP readiness or report process exit or timeout.   | `shared/projects/process.start.ts` |
-| `parseInteger(input)`               | Integer in the input range or an error that names the field. | `shared/numbers.parse.ts`          |
-| `test` fixtures                     | Supply backend and frontend base URLs and source folders.    | `shared/fixtures.ts`               |
+| `uniqueValue(prefix)` | A value no other test run uses. | `shared/test-data/unique.value.ts` |
+| `freePort()` | An unused local port. | `shared/projects/port.find.ts` |
+| `startProject(settings)` | Isolated process, output, URL and stop operation. | `shared/projects/process.start.ts` |
+| `waitForProject(instance, timeout)` | Wait for HTTP readiness or report process exit or timeout. | `shared/projects/process.start.ts` |
+| `parseInteger(input)` | Integer in the input range or an error that names the field. | `shared/numbers.parse.ts` |
+| `test` fixtures | Supply backend and frontend base URLs and source folders. | `shared/fixtures.ts` |
 
 ## 6 · Coding rules
 
