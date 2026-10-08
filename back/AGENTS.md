@@ -16,41 +16,41 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 ## 3 · Tooling
 
-| Slot         | Blocks | Command                  | Tool                                                            |
-| ------------ | ------ | ------------------------ | --------------------------------------------------------------- |
-| `lint`       | Yes    | `npm run lint`           | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
-| `format`     | No     | `npm run format`         | oxfmt                                                           |
-| `upgrade`    | No     | `npm run upgrade`        | npm-check-updates and npm install                               |
-| `unit`       | Yes    | `npm test`               | node --test                                                     |
-| `start`      | No     | `npm start`              | Node.js                                                         |
-| `acceptance` | Yes    | n/a: e2e owns acceptance | n/a                                                             |
-| `quality`    | No     | `npm run quality`        | oxlint with Blueprint complexity limits                         |
+| Slot | Blocks | Command | Tool |
+| --- | --- | --- | --- |
+| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
+| `format` | No | `npm run format` | oxfmt |
+| `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
+| `unit` | Yes | `npm test` | node --test |
+| `start` | No | `npm start` | Node.js |
+| `acceptance` | Yes | n/a: e2e owns acceptance | n/a |
+| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits |
 
 ## 4 · Architecture
 
 **Services of `core`**: registration arguments; contracts in `src/shared/http/` and `src/shared/`.
 
-| Item              | back-api                                          |
-| ----------------- | ------------------------------------------------- |
-| `composition`     | process entry and explicit manifest               |
-| `core`            | server, settings, logger, database, error handler |
-| `features`        | endpoints                                         |
-| `presentation`    | route registration and controller                 |
-| `logic`           | services and policies                             |
-| `data`            | repositories                                      |
-| `shared concerns` | http, database                                    |
+| Item | back-api |
+| --- | --- |
+| `composition` | process entry and explicit manifest |
+| `core` | server, settings, logger, database, error handler |
+| `features` | endpoints |
+| `presentation` | route registration and controller |
+| `logic` | services and policies |
+| `data` | repositories |
+| `shared concerns` | http, database |
 
 ## 5 · Folder structure
 
-| Concept                             | Path                                                                                          | Framework mechanism              |
-| ----------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------- |
-| composition                         | `src/app.main.ts, src/app.compose.ts, src/features/features.manifest.ts`                      | explicit registration list       |
-| core                                | `src/core/`                                                                                   | plain TypeScript                 |
-| features                            | `src/features/{feature}/`                                                                     | flat feature folders             |
-| facade                              | `src/features/{feature}/{feature}.api.ts`                                                     | public functions and types       |
-| presentation / logic / data / types | `*.routes.ts and *.controller.ts / *.service.ts / *.repository.ts / *.type.ts and *.value.ts` | file roles                       |
-| shared                              | `src/shared/, src/shared/http/ and src/shared/database/`                                      | primitives and service contracts |
-| unit tests                          | `src/**/*.test.ts`                                                                            | node --test                      |
+| Concept | Path | Framework mechanism |
+| --- | --- | --- |
+| composition | `src/app.main.ts, src/app.compose.ts, src/features/features.manifest.ts` | explicit registration list |
+| core | `src/core/` | plain TypeScript |
+| features | `src/features/{feature}/` | flat feature folders |
+| facade | `src/features/{feature}/{feature}.api.ts` | public functions and types |
+| presentation / logic / data / types | `*.routes.ts and *.controller.ts / *.service.ts / *.repository.ts / *.type.ts and *.value.ts` | file roles |
+| shared | `src/shared/, src/shared/http/ and src/shared/database/` | primitives and service contracts |
+| unit tests | `src/**/*.test.ts` | node --test |
 
 ```text
 src/
@@ -96,7 +96,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 ### Project rules
 
 | Rule | Scope | Origin |
-| ---- | ----- | ------ |
+| --- | --- | --- |
 
 ## 7 · Connections
 

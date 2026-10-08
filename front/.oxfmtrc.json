@@ -1,1 +1,1 @@
-{ "ignorePatterns": ["src/core/styles/*.css"] }
+{ "ignorePatterns": ["src/core/styles/*.css", "**/*.md"] }

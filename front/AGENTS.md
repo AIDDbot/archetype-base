@@ -16,41 +16,41 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 ## 3 · Tooling
 
-| Slot         | Blocks | Command                  | Tool                                                            |
-| ------------ | ------ | ------------------------ | --------------------------------------------------------------- |
-| `lint`       | Yes    | `npm run lint`           | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
-| `format`     | No     | `npm run format`         | oxfmt                                                           |
-| `upgrade`    | No     | `npm run upgrade`        | npm-check-updates and npm install                               |
-| `unit`       | Yes    | `npm test`               | node --test                                                     |
-| `start`      | No     | `npm start`              | Vite JavaScript API                                             |
-| `acceptance` | Yes    | n/a: e2e owns acceptance | n/a                                                             |
-| `quality`    | No     | `npm run quality`        | oxlint with Blueprint complexity limits                         |
+| Slot | Blocks | Command | Tool |
+| --- | --- | --- | --- |
+| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
+| `format` | No | `npm run format` | oxfmt |
+| `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
+| `unit` | Yes | `npm test` | node --test |
+| `start` | No | `npm start` | Vite JavaScript API |
+| `acceptance` | Yes | n/a: e2e owns acceptance | n/a |
+| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits |
 
 ## 4 · Architecture
 
 **Services of `core`**: registration arguments; contracts in `src/shared/http/` and `src/shared/`.
 
-| Item              | front-web                                     |
-| ----------------- | --------------------------------------------- |
-| `composition`     | browser entry and explicit lazy page manifest |
-| `core`            | shell, router, theme, settings, HTTP client   |
-| `features`        | pages and cards                               |
-| `presentation`    | page and component registration               |
-| `logic`           | stores and use cases                          |
-| `data`            | API clients                                   |
-| `shared concerns` | components, http                              |
+| Item | front-web |
+| --- | --- |
+| `composition` | browser entry and explicit lazy page manifest |
+| `core` | shell, router, theme, settings, HTTP client |
+| `features` | pages and cards |
+| `presentation` | page and component registration |
+| `logic` | stores and use cases |
+| `data` | API clients |
+| `shared concerns` | components, http |
 
 ## 5 · Folder structure
 
-| Concept                             | Path                                                                                 | Framework mechanism              |
-| ----------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------- |
-| composition                         | `src/app.main.ts, src/app.compose.ts, src/features/features.manifest.ts`             | explicit registration list       |
-| core                                | `src/core/`                                                                          | plain TypeScript                 |
-| features                            | `src/features/{feature}/`                                                            | flat feature folders             |
-| facade                              | `src/features/{feature}/{feature}.api.ts`                                            | public functions and types       |
-| presentation / logic / data / types | `*.page.ts and *.component.ts / *.store.ts / *.client.ts / *.type.ts and *.value.ts` | file roles                       |
-| shared                              | `src/shared/, src/shared/components/ and src/shared/http/`                           | primitives and service contracts |
-| unit tests                          | `src/**/*.test.ts`                                                                   | node --test                      |
+| Concept | Path | Framework mechanism |
+| --- | --- | --- |
+| composition | `src/app.main.ts, src/app.compose.ts, src/features/features.manifest.ts` | explicit registration list |
+| core | `src/core/` | plain TypeScript |
+| features | `src/features/{feature}/` | flat feature folders |
+| facade | `src/features/{feature}/{feature}.api.ts` | public functions and types |
+| presentation / logic / data / types | `*.page.ts and *.component.ts / *.store.ts / *.client.ts / *.type.ts and *.value.ts` | file roles |
+| shared | `src/shared/, src/shared/components/ and src/shared/http/` | primitives and service contracts |
+| unit tests | `src/**/*.test.ts` | node --test |
 
 ```text
 src/
@@ -66,21 +66,21 @@ src/
 
 The index of `shared`. Read it before you write a check or a conversion. Add each primitive that two or more features use. A helper of one feature has no row.
 
-| Primitive                                                                                                                     | Contract                                                                                                                                                                                                                                     | Path                                        |
-| ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `parseInteger(input)`                                                                                                         | Integer in the input range, or an error that names the field.                                                                                                                                                                                | `src/shared/numbers.parse.ts`               |
-| `readSetting(input)`                                                                                                          | The supplied value parsed, or the fallback. A parse error stops the startup.                                                                                                                                                                 | `src/shared/settings.read.ts`               |
-| `escapeHtml(value)`                                                                                                           | Text that is safe in a page.                                                                                                                                                                                                                 | `src/shared/html.escape.ts`                 |
-| `formatDate(value)`                                                                                                           | Date and time in the language of the browser.                                                                                                                                                                                                | `src/shared/date.format.ts`                 |
-| `formatDuration(seconds)`                                                                                                     | Readable duration with `Intl.DurationFormat`.                                                                                                                                                                                                | `src/shared/duration.format.ts`             |
-| `formatFact(kind, value)`, `isEndAligned(kind)`, `listMessage(count, empty)`                                                  | A fact that a person reads, `—` with no value; end alignment for numbers, dates and durations; the empty message of a list.                                                                                                                  | `src/shared/record.format.ts`               |
-| `ExpectedError(details)`                                                                                                      | Status, message and optional field errors.                                                                                                                                                                                                   | `src/shared/error.type.ts`                  |
-| `HttpClient`                                                                                                                  | The contract of the HTTP client of `core`.                                                                                                                                                                                                   | `src/shared/http.type.ts`                   |
-| `ActionLogger.action(name, path)`                                                                                             | The contract of the console logger of `core`: one named action.                                                                                                                                                                              | `src/shared/logger.type.ts`                 |
-| `identity`                                                                                                                    | Application name, description, author and website; version from the root package.                                                                                                                                                            | `src/shared/identity.ts`                    |
-| `Access`, `PageServices`, `PageContext`, `PageRegistration`, `MenuLink`, `MenuControl`, `CardRegistration`, `SessionPlatform` | Page, menu, card and session contracts between the composition, `core` and the features.                                                                                                                                                     | `src/shared/page.type.ts`                   |
-| `PlatformElement`                                                                                                             | Base of each custom element: renders a `<template>` in the light DOM.                                                                                                                                                                        | `src/shared/components/platform.element.ts` |
-| `createRecordCard()`, `createRecordDetail()`, `createRecordTable()`                                                           | Record views from a typed description (`record.type.ts`): card and detail with a footer of links (empty list: no footer), detail with sections, striped table with caption. Loading is `aria-busy`; a failure keeps the title and the links. | `src/shared/components/record.*.ts`         |
+| Primitive | Contract | Path |
+| --- | --- | --- |
+| `parseInteger(input)` | Integer in the input range, or an error that names the field. | `src/shared/numbers.parse.ts` |
+| `readSetting(input)` | The supplied value parsed, or the fallback. A parse error stops the startup. | `src/shared/settings.read.ts` |
+| `escapeHtml(value)` | Text that is safe in a page. | `src/shared/html.escape.ts` |
+| `formatDate(value)` | Date and time in the language of the browser. | `src/shared/date.format.ts` |
+| `formatDuration(seconds)` | Readable duration with `Intl.DurationFormat`. | `src/shared/duration.format.ts` |
+| `formatFact(kind, value)`, `isEndAligned(kind)`, `listMessage(count, empty)` | A fact that a person reads, `—` with no value; end alignment for numbers, dates and durations; the empty message of a list. | `src/shared/record.format.ts` |
+| `ExpectedError(details)` | Status, message and optional field errors. | `src/shared/error.type.ts` |
+| `HttpClient` | The contract of the HTTP client of `core`. | `src/shared/http.type.ts` |
+| `ActionLogger.action(name, path)` | The contract of the console logger of `core`: one named action. | `src/shared/logger.type.ts` |
+| `identity` | Application name, description, author and website; version from the root package. | `src/shared/identity.ts` |
+| `Access`, `PageServices`, `PageContext`, `PageRegistration`, `MenuLink`, `MenuControl`, `CardRegistration`, `SessionPlatform` | Page, menu, card and session contracts between the composition, `core` and the features. | `src/shared/page.type.ts` |
+| `PlatformElement` | Base of each custom element: renders a `<template>` in the light DOM. | `src/shared/components/platform.element.ts` |
+| `createRecordCard()`, `createRecordDetail()`, `createRecordTable()` | Record views from a typed description (`record.type.ts`): card and detail with a footer of links (empty list: no footer), detail with sections, striped table with caption. Loading is `aria-busy`; a failure keeps the title and the links. | `src/shared/components/record.*.ts` |
 
 ## 6 · Coding rules
 
@@ -100,7 +100,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 ### Project rules
 
 | Rule | Scope | Origin |
-| ---- | ----- | ------ |
+| --- | --- | --- |
 
 ## 7 · Connections
 

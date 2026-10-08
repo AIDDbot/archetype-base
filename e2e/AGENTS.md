@@ -16,15 +16,15 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 ## 3 · Tooling
 
-| Slot         | Blocks | Command                            | Tool                                                            |
-| ------------ | ------ | ---------------------------------- | --------------------------------------------------------------- |
-| `lint`       | Yes    | `npm run lint`                     | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
-| `format`     | No     | `npm run format`                   | oxfmt                                                           |
-| `upgrade`    | No     | `npm run upgrade`                  | npm-check-updates and npm install                               |
-| `unit`       | Yes    | `npm run unit`                     | node --test lifecycle checks                                    |
-| `start`      | No     | n/a: the suite starts its projects | n/a                                                             |
-| `acceptance` | Yes    | `npm test`                         | Playwright                                                      |
-| `quality`    | No     | `npm run quality`                  | oxlint with Blueprint complexity limits                         |
+| Slot | Blocks | Command | Tool |
+| --- | --- | --- | --- |
+| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
+| `format` | No | `npm run format` | oxfmt |
+| `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
+| `unit` | Yes | `npm run unit` | node --test lifecycle checks |
+| `start` | No | n/a: the suite starts its projects | n/a |
+| `acceptance` | Yes | `npm test` | Playwright |
+| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits |
 
 `npm start` opens the interactive Playwright UI. It is for a human only: an agent never runs it, because it does not stop.
 
@@ -32,26 +32,26 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 **Services of `core`**: n/a: fixtures supply the base URLs; shared has service contracts.
 
-| Item              | e2e                                     |
-| ----------------- | --------------------------------------- |
-| `composition`     | n/a: the test runner is the entry       |
-| `core`            | life cycle of the suite                 |
-| `features`        | one test folder for each system feature |
-| `presentation`    | n/a: no layers                          |
-| `logic`           | n/a: no layers                          |
-| `data`            | n/a: no layers                          |
-| `shared concerns` | page-objects, test-data, projects       |
+| Item | e2e |
+| --- | --- |
+| `composition` | n/a: the test runner is the entry |
+| `core` | life cycle of the suite |
+| `features` | one test folder for each system feature |
+| `presentation` | n/a: no layers |
+| `logic` | n/a: no layers |
+| `data` | n/a: no layers |
+| `shared concerns` | page-objects, test-data, projects |
 
 ## 5 · Folder structure
 
-| Concept                              | Path                                                                 | Framework mechanism                |
-| ------------------------------------ | -------------------------------------------------------------------- | ---------------------------------- |
-| entry                                | `playwright.config.ts`                                               | Playwright configuration           |
-| core                                 | `core/`                                                              | global setup and teardown          |
-| features                             | `features/{feature}/`                                                | *.api.spec.ts and *.web.spec.ts    |
-| facade / presentation / logic / data | `n/a`                                                                | e2e has no layers                  |
-| shared                               | `shared/, shared/page-objects/, shared/test-data/, shared/projects/` | fixtures and reusable test support |
-| unit tests                           | `core/*.test.ts`                                                     | node --test lifecycle checks       |
+| Concept | Path | Framework mechanism |
+| --- | --- | --- |
+| entry | `playwright.config.ts` | Playwright configuration |
+| core | `core/` | global setup and teardown |
+| features | `features/{feature}/` | *.api.spec.ts and *.web.spec.ts |
+| facade / presentation / logic / data | `n/a` | e2e has no layers |
+| shared | `shared/, shared/page-objects/, shared/test-data/, shared/projects/` | fixtures and reusable test support |
+| unit tests | `core/*.test.ts` | node --test lifecycle checks |
 
 ```text
 playwright.config.ts
@@ -64,20 +64,20 @@ shared/
 
 The index of `shared`. Read it before you write a check or a conversion. Add each primitive that two or more features use. A helper of one feature has no row: its page object is `shared/page-objects/{feature}.page.ts`, and its test data is in `shared/test-data/`. The life cycle of the suite in `shared/projects/` has a row only for what the features use.
 
-| Primitive                             | Contract                                                                                                               | Path                               |
-| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| `authClient(request, baseUrl)`        | Register, login and resolve the current user through HTTP.                                                             | `shared/auth.client.ts`            |
-| `uniqueCredentials()`                 | Unique email and password for an isolated account.                                                                     | `shared/auth.client.ts`            |
-| `authPage(page)`                      | Auth fields, submit, result and fill operation.                                                                        | `shared/page-objects/auth.page.ts` |
-| `expectError(body, message?)`         | Check the uniform error body and optional fields.                                                                      | `shared/error.check.ts`            |
-| `uniqueValue(prefix)`                 | A value no other test run uses.                                                                                        | `shared/test-data/unique.value.ts` |
-| `runProject(settings, use)`           | Start a project on a free port, wait, use it, always stop it. Use it for each test that needs its own running project. | `shared/projects/project.run.ts`   |
-| `withTemporaryDirectory(prefix, use)` | Make a temporary directory, use it, always remove it.                                                                  | `shared/projects/project.run.ts`   |
-| `freePort()`                          | An unused local port.                                                                                                  | `shared/projects/port.find.ts`     |
-| `startProject(settings)`              | Isolated process, output, URL and stop operation. Use it only for a project that must fail at startup.                 | `shared/projects/process.start.ts` |
-| `waitForProject(instance, timeout)`   | Wait for HTTP readiness or report process exit or timeout.                                                             | `shared/projects/process.start.ts` |
-| `parseInteger(input)`                 | Integer in the input range or an error that names the field.                                                           | `shared/numbers.parse.ts`          |
-| `test` fixtures                       | Supply backend and frontend base URLs and source folders.                                                              | `shared/fixtures.ts`               |
+| Primitive | Contract | Path |
+| --- | --- | --- |
+| `authClient(request, baseUrl)` | Register, login and resolve the current user through HTTP. | `shared/auth.client.ts` |
+| `uniqueCredentials()` | Unique email and password for an isolated account. | `shared/auth.client.ts` |
+| `authPage(page)` | Auth fields, submit, result and fill operation. | `shared/page-objects/auth.page.ts` |
+| `expectError(body, message?)` | Check the uniform error body and optional fields. | `shared/error.check.ts` |
+| `uniqueValue(prefix)` | A value no other test run uses. | `shared/test-data/unique.value.ts` |
+| `runProject(settings, use)` | Start a project on a free port, wait, use it, always stop it. Use it for each test that needs its own running project. | `shared/projects/project.run.ts` |
+| `withTemporaryDirectory(prefix, use)` | Make a temporary directory, use it, always remove it. | `shared/projects/project.run.ts` |
+| `freePort()` | An unused local port. | `shared/projects/port.find.ts` |
+| `startProject(settings)` | Isolated process, output, URL and stop operation. Use it only for a project that must fail at startup. | `shared/projects/process.start.ts` |
+| `waitForProject(instance, timeout)` | Wait for HTTP readiness or report process exit or timeout. | `shared/projects/process.start.ts` |
+| `parseInteger(input)` | Integer in the input range or an error that names the field. | `shared/numbers.parse.ts` |
+| `test` fixtures | Supply backend and frontend base URLs and source folders. | `shared/fixtures.ts` |
 
 ## 6 · Coding rules
 
@@ -94,8 +94,8 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 
 ### Project rules
 
-| Rule                                                                                          | Scope                  | Origin                                                     |
-| --------------------------------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| Rule | Scope | Origin |
+| --- | --- | --- |
 | A parent process close event does not prove descendant exit. Track tree ownership separately. | Custom command helpers | S0008 review: descendants can use separate output streams. |
 
 ## 7 · Connections
