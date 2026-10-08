@@ -96,8 +96,7 @@ A new archetype of a type (for example a different `front-web`) passes the same 
 
 ## Versions
 
-- The major and the minor version, and the `codename` of the root `package.json`, are the same as the AIDDbot release whose Blueprint this repository obeys. Change them only when that AIDDbot release copies its Blueprint here.
-- A fix that keeps the Blueprint is a patch version. Patch versions are independent of AIDDbot.
+- The version and the `codename` of the root `package.json` are the same as the AIDDbot release that pins this repository, patch included. Each AIDDbot release publishes this repository first with its version, also when nothing changed here.
 - Each version has a tag `v{version}`. Never move a published tag.
 
 ## Git
