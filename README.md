@@ -8,7 +8,7 @@ Reference archetypes for systems that [AIDDbot](https://aiddbot.com) scaffolds. 
 | [`front/`](./front/) | `front-web` | Framework-free TypeScript 7 with Vite, web components, Pico CSS |
 | [`e2e/`](./e2e/) | `e2e` | Playwright; it is also the conformance suite of the archetypes |
 
-[`foundation/`](./foundation/) holds the instance of each foundation spec (`S0001`–`S0008`). Each acceptance test has the tag of its requirement.
+[`foundation/`](./foundation/) holds the instance of each foundation spec (`S0001`–`S0008`). Each acceptance test has the tag of its requirement. [`model/`](./model/) holds the schema documents of the archetypes: the conceptual model, the database of `back`, and the API of `back` and `front`.
 
 Common tooling: npm, oxlint (lint, type check, layer boundaries and quality limits), oxfmt, and the Node.js test runner.
 

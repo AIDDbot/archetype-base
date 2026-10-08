@@ -88,6 +88,7 @@ An archetype enters or changes in this repository only when all of these are tru
 - `lint`, `unit` and `quality` pass in each project, and `quality` reports no warning.
 - The full acceptance run of `e2e` passes against the reference `back` and `front`.
 - Each requirement in `foundation/` has a test with its tag, and each tag names a requirement in `foundation/`.
+- The schema documents in `model/` match the code: the model, the tables of `back`, and the endpoints of `back` and `front`. AIDDbot copies them into each system and never derives them again.
 - The archetype has no open technical debt. Debt in an archetype goes into each system that starts from it.
 - A boundary canary fails `lint`: a `logic` file that imports a `presentation` file of the same feature. Undo the canary.
 
