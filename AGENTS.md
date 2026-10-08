@@ -24,7 +24,7 @@ All archetypes implement the AIDDbot foundation specs. `foundation/` holds the i
 
 ## Blueprint
 
-<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.5 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
+<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.6 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
 
 All projects obey these principles. A project `AGENTS.md` gives only its own data and the limits that its archetype changes. Do not explore the code to learn the setup. First make it work, then make it correct: only `lint`, `unit` and acceptance block a delivery, and a security finding gets one repair first. Any other violation is debt.
 
