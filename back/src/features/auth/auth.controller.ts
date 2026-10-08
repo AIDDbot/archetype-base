@@ -4,6 +4,8 @@ import { ExpectedError } from "../../shared/error.type.ts";
 
 type AuthField = "email" | "name" | "password";
 type FieldResult = { value: string } | { fields: Record<string, string> | undefined };
+const registerFields: readonly AuthField[] = ["email", "name", "password"];
+const loginFields: readonly AuthField[] = ["email", "password"];
 function readAuthText(input: { value: unknown; field: AuthField }): FieldResult {
   try {
     return { value: requireText(input) };
@@ -27,13 +29,13 @@ function collectAuthFields(input: { body: Record<string, unknown>; names: readon
     throw new ExpectedError({ status: 400, message: "Invalid input", fields });
   return values;
 }
+function asBody(input: unknown): Record<string, unknown> {
+  const isObject = typeof input === "object" && input !== null;
+  return isObject ? (input as Record<string, unknown>) : {};
+}
 export function readAuthInput(input: unknown, isRegister: boolean) {
-  const body =
-    typeof input === "object" && input !== null ? (input as Record<string, unknown>) : {};
-  const values = collectAuthFields({
-    body,
-    names: isRegister ? ["email", "name", "password"] : ["email", "password"],
-  });
+  const body = asBody(input);
+  const values = collectAuthFields({ body, names: isRegister ? registerFields : loginFields });
   return {
     email: new Email(values.email),
     name: values.name ?? "",

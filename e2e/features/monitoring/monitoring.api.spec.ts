@@ -1,29 +1,26 @@
 import { test, expect } from "../../shared/fixtures.ts";
 import { expectError } from "../../shared/error.check.ts";
 import { freePort } from "../../shared/projects/port.find.ts";
-import { startProject, waitForProject } from "../../shared/projects/process.start.ts";
-import { mkdtemp, readdir, readFile, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { startProject } from "../../shared/projects/process.start.ts";
+import { runProject, withTemporaryDirectory } from "../../shared/projects/project.run.ts";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 test(
   "request logs have local columns, severity and no sensitive values",
   { tag: ["@S0002-R01", "@S0002-R02"] },
   async ({ backDirectory }) => {
-    const directory = await mkdtemp(join(tmpdir(), "monitoring-"));
-    const port = await freePort();
-    const instance = await startProject({
-      kind: "back",
-      directory: backDirectory,
-      port,
-      environment: { PORT: String(port), LOG_DIR: directory },
-    });
-    const identifier = crypto.randomUUID();
-    try {
-      await waitForProject(instance, 15000);
-      await fetch(`${instance.url}/api/missing`, { headers: { "X-Request-Id": identifier } });
-      await fetch(instance.url, { method: "OPTIONS" });
-      await instance.stop();
+    await withTemporaryDirectory("monitoring-", async (directory) => {
+      const identifier = crypto.randomUUID();
+      const settings = {
+        kind: "back",
+        directory: backDirectory,
+        environment: { LOG_DIR: directory },
+      } as const;
+      await runProject(settings, async (instance) => {
+        await fetch(`${instance.url}/api/missing`, { headers: { "X-Request-Id": identifier } });
+        await fetch(instance.url, { method: "OPTIONS" });
+      });
       const files = await readdir(directory);
       expect(files).toHaveLength(1);
       expect(files[0]).toMatch(/^\d{4}-\d{2}-\d{2}\.log$/);
@@ -35,38 +32,29 @@ test(
       ).toBe(true);
       expect(lines.some((line) => line.includes(" INFO OPTIONS / 204 "))).toBe(true);
       expect(lines.join("\n")).not.toContain(identifier);
-    } finally {
-      await instance.stop();
-      await rm(directory, { recursive: true, force: true });
-    }
+    });
   },
 );
 test(
   "warn threshold excludes successful requests",
   { tag: "@S0002-R03" },
   async ({ backDirectory }) => {
-    const directory = await mkdtemp(join(tmpdir(), "threshold-"));
-    const port = await freePort();
-    const instance = await startProject({
-      kind: "back",
-      directory: backDirectory,
-      port,
-      environment: { PORT: String(port), LOG_DIR: directory, LOG_LEVEL: "warn" },
-    });
-    try {
-      await waitForProject(instance, 15000);
-      await fetch(instance.url, { method: "OPTIONS" });
-      await instance.stop();
+    await withTemporaryDirectory("threshold-", async (directory) => {
+      const settings = {
+        kind: "back",
+        directory: backDirectory,
+        environment: { LOG_DIR: directory, LOG_LEVEL: "warn" },
+      } as const;
+      await runProject(settings, async (instance) => {
+        await fetch(instance.url, { method: "OPTIONS" });
+      });
       const files = await readdir(directory);
       const text = (
         await Promise.all(files.map((file) => readFile(join(directory, file), "utf8")))
       ).join("");
       expect(text).not.toContain("INFO");
       expect(text).not.toContain("OPTIONS");
-    } finally {
-      await instance.stop();
-      await rm(directory, { recursive: true, force: true });
-    }
+    });
   },
 );
 test("unknown API has uniform 404 error", { tag: "@S0002-R04" }, async ({ backUrl, request }) => {
@@ -115,20 +103,11 @@ for (const kind of ["back", "front"] as const) {
     `${kind} prints confirmed openable listening URL`,
     { tag: kind === "back" ? "@S0002-R10" : "@S0002-R11" },
     async ({ backDirectory, frontDirectory }) => {
-      const port = await freePort();
-      const instance = await startProject({
-        kind,
-        directory: kind === "back" ? backDirectory : frontDirectory,
-        port,
-        environment: { PORT: String(port) },
-      });
-      try {
-        await waitForProject(instance, 15000);
-        expect(instance.output).toContain(`Listening on http://localhost:${port}`);
+      const directory = kind === "back" ? backDirectory : frontDirectory;
+      await runProject({ kind, directory }, async (instance) => {
+        expect(instance.output).toContain(`Listening on ${instance.url}`);
         expect((await fetch(instance.url)).status).toBe(kind === "back" ? 404 : 200);
-      } finally {
-        await instance.stop();
-      }
+      });
     },
   );
 }

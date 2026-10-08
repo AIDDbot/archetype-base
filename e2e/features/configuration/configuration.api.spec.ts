@@ -1,25 +1,14 @@
-import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
-import { tmpdir } from "node:os";
 import { DatabaseSync } from "node:sqlite";
 import { test, expect } from "../../shared/fixtures.ts";
 import { freePort } from "../../shared/projects/port.find.ts";
-import { startProject, waitForProject } from "../../shared/projects/process.start.ts";
+import { startProject } from "../../shared/projects/process.start.ts";
+import { runProject, withTemporaryDirectory } from "../../shared/projects/project.run.ts";
 
 test("back listens on supplied port", { tag: "@S0001-R01" }, async ({ backDirectory }) => {
-  const port = await freePort();
-  const instance = await startProject({
-    kind: "back",
-    directory: backDirectory,
-    port,
-    environment: { PORT: String(port) },
-  });
-  try {
-    await waitForProject(instance, 15000);
+  await runProject({ kind: "back", directory: backDirectory }, async (instance) => {
     expect((await fetch(instance.url)).status).toBe(404);
-  } finally {
-    await instance.stop();
-  }
+  });
 });
 test(
   "back listens on default port with wildcard CORS",
@@ -35,23 +24,18 @@ test(
   "front serves document on supplied port and configured runtime URL",
   { tag: ["@S0001-R03", "@S0001-R08"] },
   async ({ frontDirectory }) => {
-    const port = await freePort();
     const apiBaseUrl = `https://api-${crypto.randomUUID()}.example`;
-    const instance = await startProject({
+    const settings = {
       kind: "front",
       directory: frontDirectory,
-      port,
-      environment: { PORT: String(port), API_BASE_URL: apiBaseUrl },
-    });
-    try {
-      await waitForProject(instance, 15000);
+      environment: { API_BASE_URL: apiBaseUrl },
+    } as const;
+    await runProject(settings, async (instance) => {
       expect(await (await fetch(instance.url)).text()).toContain("/src/app.main.ts");
       const response = await fetch(`${instance.url}/runtime-config.json`);
       expect(response.status).toBe(200);
       expect(await response.json()).toEqual({ apiBaseUrl });
-    } finally {
-      await instance.stop();
-    }
+    });
   },
 );
 test(
@@ -90,44 +74,30 @@ test(
   "back reflects origins in its configured list",
   { tag: "@S0001-R06" },
   async ({ backDirectory }) => {
-    const port = await freePort();
     const origin = `https://${crypto.randomUUID()}.example`;
-    const instance = await startProject({
+    const settings = {
       kind: "back",
       directory: backDirectory,
-      port,
-      environment: { PORT: String(port), CORS_ORIGIN: `https://other.example,${origin}` },
-    });
-    try {
-      await waitForProject(instance, 15000);
+      environment: { CORS_ORIGIN: `https://other.example,${origin}` },
+    } as const;
+    await runProject(settings, async (instance) => {
       const response = await fetch(instance.url, { headers: { Origin: origin } });
       expect(response.headers.get("access-control-allow-origin")).toBe(origin);
-    } finally {
-      await instance.stop();
-    }
+    });
   },
 );
 test(
   "migrations persist once across restarts",
   { tag: "@S0001-R09" },
   async ({ backDirectory }) => {
-    const directory = await mkdtemp(join(tmpdir(), "aidd-migrations-"));
-    const path = join(directory, "database.sqlite");
-    try {
-      for (let run = 0; run < 2; run++) {
-        const port = await freePort();
-        const instance = await startProject({
-          kind: "back",
-          directory: backDirectory,
-          port,
-          environment: { PORT: String(port), DATABASE_URL: path },
-        });
-        try {
-          await waitForProject(instance, 15000);
-        } finally {
-          await instance.stop();
-        }
-      }
+    await withTemporaryDirectory("aidd-migrations-", async (directory) => {
+      const path = join(directory, "database.sqlite");
+      const settings = {
+        kind: "back",
+        directory: backDirectory,
+        environment: { DATABASE_URL: path },
+      } as const;
+      for (let run = 0; run < 2; run++) await runProject(settings, async () => {});
       const database = new DatabaseSync(path);
       const rows = database
         .prepare("SELECT version, appliedAt FROM schema_versions ORDER BY version")
@@ -136,32 +106,32 @@ test(
       expect(new Set(rows.map((row) => row.version)).size).toBe(rows.length);
       for (const row of rows) expect(Number.isNaN(Date.parse(String(row.appliedAt)))).toBe(false);
       database.close();
-    } finally {
-      await rm(directory, { recursive: true, force: true });
-    }
+    });
   },
 );
 test("unknown database version stops startup", { tag: "@S0001-R10" }, async ({ backDirectory }) => {
-  const directory = await mkdtemp(join(tmpdir(), "aidd-unknown-"));
-  const path = join(directory, "database.sqlite");
-  const unknown = `9999-${crypto.randomUUID()}.sql`;
-  const database = new DatabaseSync(path);
-  database.exec("CREATE TABLE schema_versions(version TEXT PRIMARY KEY, appliedAt TEXT NOT NULL)");
-  database
-    .prepare("INSERT INTO schema_versions VALUES (?, ?)")
-    .run(unknown, new Date().toISOString());
-  database.close();
-  const instance = await startProject({
-    kind: "back",
-    directory: backDirectory,
-    port: await freePort(),
-    environment: { DATABASE_URL: path },
+  await withTemporaryDirectory("aidd-unknown-", async (directory) => {
+    const path = join(directory, "database.sqlite");
+    const unknown = `9999-${crypto.randomUUID()}.sql`;
+    const database = new DatabaseSync(path);
+    database.exec(
+      "CREATE TABLE schema_versions(version TEXT PRIMARY KEY, appliedAt TEXT NOT NULL)",
+    );
+    database
+      .prepare("INSERT INTO schema_versions VALUES (?, ?)")
+      .run(unknown, new Date().toISOString());
+    database.close();
+    const instance = await startProject({
+      kind: "back",
+      directory: backDirectory,
+      port: await freePort(),
+      environment: { DATABASE_URL: path },
+    });
+    try {
+      expect(await instance.exited).not.toBe(0);
+      expect(instance.output).toContain(unknown);
+    } finally {
+      await instance.stop();
+    }
   });
-  try {
-    expect(await instance.exited).not.toBe(0);
-    expect(instance.output).toContain(unknown);
-  } finally {
-    await instance.stop();
-    await rm(directory, { recursive: true, force: true });
-  }
 });

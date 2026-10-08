@@ -64,18 +64,20 @@ shared/
 
 The index of `shared`. Read it before you write a check or a conversion. Add each primitive that two or more features use. A helper of one feature has no row: its page object is `shared/page-objects/{feature}.page.ts`, and its test data is in `shared/test-data/`. The life cycle of the suite in `shared/projects/` has a row only for what the features use.
 
-| Primitive | Contract | Path |
-| --- | --- | --- |
-| `authClient(request, baseUrl)` | Register, login and resolve the current user through HTTP. | `shared/auth.client.ts` |
-| `uniqueCredentials()` | Unique email and password for an isolated account. | `shared/auth.client.ts` |
-| `authPage(page)` | Auth fields, submit, result and fill operation. | `shared/page-objects/auth.page.ts` |
-| `expectError(body, message?)` | Check the uniform error body and optional fields. | `shared/error.check.ts` |
-| `uniqueValue(prefix)` | A value no other test run uses. | `shared/test-data/unique.value.ts` |
-| `freePort()` | An unused local port. | `shared/projects/port.find.ts` |
-| `startProject(settings)` | Isolated process, output, URL and stop operation. | `shared/projects/process.start.ts` |
-| `waitForProject(instance, timeout)` | Wait for HTTP readiness or report process exit or timeout. | `shared/projects/process.start.ts` |
-| `parseInteger(input)` | Integer in the input range or an error that names the field. | `shared/numbers.parse.ts` |
-| `test` fixtures | Supply backend and frontend base URLs and source folders. | `shared/fixtures.ts` |
+| Primitive                             | Contract                                                                                                               | Path                               |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `authClient(request, baseUrl)`        | Register, login and resolve the current user through HTTP.                                                             | `shared/auth.client.ts`            |
+| `uniqueCredentials()`                 | Unique email and password for an isolated account.                                                                     | `shared/auth.client.ts`            |
+| `authPage(page)`                      | Auth fields, submit, result and fill operation.                                                                        | `shared/page-objects/auth.page.ts` |
+| `expectError(body, message?)`         | Check the uniform error body and optional fields.                                                                      | `shared/error.check.ts`            |
+| `uniqueValue(prefix)`                 | A value no other test run uses.                                                                                        | `shared/test-data/unique.value.ts` |
+| `runProject(settings, use)`           | Start a project on a free port, wait, use it, always stop it. Use it for each test that needs its own running project. | `shared/projects/project.run.ts`   |
+| `withTemporaryDirectory(prefix, use)` | Make a temporary directory, use it, always remove it.                                                                  | `shared/projects/project.run.ts`   |
+| `freePort()`                          | An unused local port.                                                                                                  | `shared/projects/port.find.ts`     |
+| `startProject(settings)`              | Isolated process, output, URL and stop operation. Use it only for a project that must fail at startup.                 | `shared/projects/process.start.ts` |
+| `waitForProject(instance, timeout)`   | Wait for HTTP readiness or report process exit or timeout.                                                             | `shared/projects/process.start.ts` |
+| `parseInteger(input)`                 | Integer in the input range or an error that names the field.                                                           | `shared/numbers.parse.ts`          |
+| `test` fixtures                       | Supply backend and frontend base URLs and source folders.                                                              | `shared/fixtures.ts`               |
 
 ## 6 · Coding rules
 

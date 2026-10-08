@@ -1,8 +1,5 @@
 import { test, expect } from "../../shared/fixtures.ts";
-import { startProject, waitForProject } from "../../shared/projects/process.start.ts";
-import { freePort } from "../../shared/projects/port.find.ts";
-import { mkdtemp, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { runProject, withTemporaryDirectory } from "../../shared/projects/project.run.ts";
 import { join } from "node:path";
 
 interface Health {
@@ -29,27 +26,17 @@ test(
   "restart increments persisted startup count",
   { tag: "@S0004-R02" },
   async ({ backDirectory }) => {
-    const directory = await mkdtemp(join(tmpdir(), "health-runs-"));
-    const counts: number[] = [];
-    try {
-      for (let run = 0; run < 2; run++) {
-        const port = await freePort();
-        const instance = await startProject({
-          kind: "back",
-          directory: backDirectory,
-          port,
-          environment: { PORT: String(port), DATABASE_URL: join(directory, "database.sqlite") },
-        });
-        try {
-          await waitForProject(instance, 15000);
-          counts.push(((await (await fetch(`${instance.url}/api/health`)).json()) as Health).runs);
-        } finally {
-          await instance.stop();
-        }
-      }
-      expect(counts[1]).toBeGreaterThan(counts[0]!);
-    } finally {
-      await rm(directory, { recursive: true, force: true });
-    }
+    await withTemporaryDirectory("health-runs-", async (directory) => {
+      const settings = {
+        kind: "back",
+        directory: backDirectory,
+        environment: { DATABASE_URL: join(directory, "database.sqlite") },
+      } as const;
+      const readRuns = async (instance: { url: string }) =>
+        ((await (await fetch(`${instance.url}/api/health`)).json()) as Health).runs;
+      const first = await runProject(settings, readRuns);
+      const second = await runProject(settings, readRuns);
+      expect(second).toBeGreaterThan(first);
+    });
   },
 );
