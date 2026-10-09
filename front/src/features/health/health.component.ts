@@ -2,8 +2,7 @@ import type { PageContext } from "../../shared/page.type.ts";
 import type { Fact } from "../../shared/record.type.ts";
 import { createRecordCard } from "../../shared/components/record.card.ts";
 import { createRecordDetail } from "../../shared/components/record.detail.ts";
-import { createHealthClient } from "./health.client.ts";
-import { createHealthStore } from "./health.store.ts";
+import { loadHealth as loadHealthState } from "./health.store.ts";
 import type { Health } from "./health.type.ts";
 
 const title = "Health";
@@ -17,7 +16,7 @@ function healthFacts(health: Health): readonly Fact[] {
   ];
 }
 function loadHealth(context: PageContext) {
-  return createHealthStore(createHealthClient(context.services.http)).load();
+  return loadHealthState(context.services.http);
 }
 export async function renderHealthCard(context: PageContext) {
   const card = createRecordCard();

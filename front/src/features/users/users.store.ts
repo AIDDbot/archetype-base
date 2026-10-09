@@ -1,3 +1,5 @@
+import type { HttpClient } from "../../shared/http.type.ts";
+import { createAccountClient } from "./users.client.ts";
 import type { AccountState, UserId } from "./users.type.ts";
 
 export function createAccountStore(client: { read(id: UserId): Promise<AccountState> }) {
@@ -11,4 +13,7 @@ export function createAccountStore(client: { read(id: UserId): Promise<AccountSt
       return state;
     },
   };
+}
+export function loadAccount(http: HttpClient, id: UserId) {
+  return createAccountStore(createAccountClient(http)).load(id);
 }

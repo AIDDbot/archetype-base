@@ -1,3 +1,5 @@
+import type { HttpClient } from "../../shared/http.type.ts";
+import { createAuthClient } from "./auth.client.ts";
 import type { AuthSession, PublicUser } from "./auth.type.ts";
 import type { SessionPorts } from "./auth.persistence.type.ts";
 
@@ -54,4 +56,11 @@ export function createSubmission() {
       isSending = false;
     },
   };
+}
+export function submitAuth(
+  http: HttpClient,
+  operation: "register" | "login",
+  values: Record<string, string>,
+) {
+  return createAuthClient(http).submit(operation, values);
 }

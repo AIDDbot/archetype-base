@@ -1,3 +1,5 @@
+import type { HttpClient } from "../../shared/http.type.ts";
+import { createHealthClient } from "./health.client.ts";
 import type { Health, HealthState } from "./health.type.ts";
 
 export function createHealthStore(client: { read(): Promise<Health | undefined> }) {
@@ -12,4 +14,7 @@ export function createHealthStore(client: { read(): Promise<Health | undefined> 
       return state;
     },
   };
+}
+export function loadHealth(http: HttpClient) {
+  return createHealthStore(createHealthClient(http)).load();
 }

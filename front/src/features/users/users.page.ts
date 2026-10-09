@@ -1,7 +1,6 @@
 import type { PageContext } from "../../shared/page.type.ts";
 import { createRecordDetail } from "../../shared/components/record.detail.ts";
-import { createAccountStore } from "./users.store.ts";
-import { createAccountClient } from "./users.client.ts";
+import { loadAccount } from "./users.store.ts";
 import type { Account } from "./users.type.ts";
 
 function describeAccount(account: Account) {
@@ -27,8 +26,7 @@ export async function mount(context: PageContext) {
   context.outlet.append(detail);
   const id = context.parameters.id;
   if (id === undefined) throw new Error("Account id parameter is missing");
-  const client = createAccountClient(context.services.http);
-  const state = await createAccountStore(client).load({ value: id });
+  const state = await loadAccount(context.services.http, { value: id });
   if (state.status === "loaded") return detail.show(describeAccount(state.account));
   detail.fail({
     title: "Account",

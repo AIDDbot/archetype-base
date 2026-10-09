@@ -1,8 +1,7 @@
 import type { PageContext } from "../../shared/page.type.ts";
 import { ExpectedError } from "../../shared/error.type.ts";
 import { PlatformElement } from "../../shared/components/platform.element.ts";
-import { createAuthClient } from "./auth.client.ts";
-import { createSubmission, setSession } from "./auth.store.ts";
+import { createSubmission, setSession, submitAuth } from "./auth.store.ts";
 import type { AuthSession, PublicUser } from "./auth.type.ts";
 
 type AuthOperation = "register" | "login";
@@ -89,8 +88,7 @@ export function mountForm(context: PageContext, operation: AuthOperation) {
     context.services.logger.action(operation, location.pathname);
     const values = readValues(surface.form);
     for (const field of surface.element.querySelectorAll("[data-field]")) field.textContent = "";
-    void createAuthClient(context.services.http)
-      .submit(operation, values)
+    void submitAuth(context.services.http, operation, values)
       .then((answer) => renderAuthAnswer(context, { result: surface.result, answer }))
       .catch((error: unknown) => renderAuthFailure(surface, error))
       .finally(() => {
