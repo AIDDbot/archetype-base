@@ -1,15 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createSubmission, createSessionStore } from "./auth.store.ts";
-
-void test("submission state prevents overlapping requests and permits retry", () => {
-  const submission = createSubmission();
-  assert.equal(submission.begin(), true);
-  assert.equal(submission.begin(), false);
-  assert.equal(submission.isSending, true);
-  submission.finish();
-  assert.equal(submission.begin(), true);
-});
+import { createSessionStore } from "./auth.store.ts";
 
 void test("session logic uses fake persistence and notifications without browser globals", () => {
   const writes: string[] = [];

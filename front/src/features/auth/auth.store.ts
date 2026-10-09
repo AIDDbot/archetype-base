@@ -41,26 +41,9 @@ export function restoreUser(value: PublicUser) {
 export function clearSession() {
   sessionStore.clearSession();
 }
-export function createSubmission() {
-  let isSending = false;
-  return {
-    get isSending() {
-      return isSending;
-    },
-    begin() {
-      if (isSending) return false;
-      isSending = true;
-      return true;
-    },
-    finish() {
-      isSending = false;
-    },
-  };
-}
 export function submitAuth(
   http: HttpClient,
-  operation: "register" | "login",
-  values: Record<string, string>,
+  request: { operation: "register" | "login"; values: Record<string, string> },
 ) {
-  return createAuthClient(http).submit(operation, values);
+  return createAuthClient(http).submit(request.operation, request.values);
 }

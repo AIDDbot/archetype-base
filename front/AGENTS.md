@@ -74,6 +74,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 | `formatDate(value)` | Date and time in the language of the browser. | `src/shared/date.format.ts` |
 | `formatDuration(seconds)` | Readable duration with `Intl.DurationFormat`. | `src/shared/duration.format.ts` |
 | `formatFact(kind, value)`, `isEndAligned(kind)`, `listMessage(count, empty)` | A fact that a person reads, `—` with no value; end alignment for numbers, dates and durations; the empty message of a list. | `src/shared/record.format.ts` |
+| `createRecordForm(tag)`, `show(description)`, `onSubmit(submit, fallback)` | A form from a description of its fields: labels, required controls, each field error next to its control (`aria-describedby`, `aria-invalid`), one submission at a time with a busy state, the result or a readable error. Use it for each form; never build one of your own. | `src/shared/components/record.form.ts` |
 | `ExpectedError(details)` | Status, message and optional field errors. | `src/shared/error.type.ts` |
 | `HttpClient` | The contract of the HTTP client of `core`. | `src/shared/http.type.ts` |
 | `ActionLogger.action(name, path)` | The contract of the console logger of `core`: one named action. | `src/shared/logger.type.ts` |

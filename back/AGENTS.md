@@ -70,6 +70,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 | --- | --- | --- |
 | `Email(value)` | Check non-empty text. Normalize lower case. | `src/shared/email.value.ts` |
 | `requireText(input)` | Trim non-empty text or raise field errors. | `src/shared/text.check.ts` |
+| `readFields(input, rules)`, `text`, `integerIn(min, max)`, `oneOf(options)` | Read a request body by a rule for each field: the typed values, or one 400 error with the message of each invalid field. Use it for each input; never write a parser of your own. | `src/shared/input.read.ts` |
 | `RouteRegistration`, `SessionResolver` | Explicit route visibility and opaque session resolution contracts. | `src/shared/http/application.type.ts` |
 | `ApplicationServices`, `FeatureRegistration` | Inject the database into explicit feature registration. | `src/shared/http/application.type.ts` |
 | `ExpectedError(details)` | Status, message and optional field errors. | `src/shared/error.type.ts` |
