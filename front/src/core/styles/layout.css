@@ -7,6 +7,6 @@ application-shell { display: block; }
   & > article { margin-bottom: 0; }
 }
 @media (max-width: 40rem) {
-  nav { flex-wrap: wrap; }
+  nav, nav ul { flex-wrap: wrap; }
   .card-grid { grid-template-columns: 1fr; }
 }

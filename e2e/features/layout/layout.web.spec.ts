@@ -88,3 +88,26 @@ test(
     expect(lines).toContain(`theme ${selected}`);
   },
 );
+test(
+  "the menu wraps its links on a narrow screen when features add links",
+  { tag: "@S0003-R13" },
+  async ({ page, frontUrl }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(frontUrl);
+    await expect(shellPage(page).home).toBeVisible();
+    await page.evaluate(() => {
+      const menu = document.querySelector("#menu-links");
+      for (const label of ["Rockets", "Launches", "Bookings", "Customers"]) {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = `/${label.toLowerCase()}`;
+        link.textContent = label;
+        item.append(link);
+        menu?.append(item);
+      }
+    });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+  },
+);

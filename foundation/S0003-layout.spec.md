@@ -36,12 +36,13 @@ Each page of the `front` must have the same frame, in the theme that the user se
 - **R10**: WHEN the `front` shows a page after the first load or after a navigation, it SHALL write one console line with the path of that page.
 - **R11**: WHEN a user changes the theme, the `front` SHALL write one console line with the selected theme.
 - **R12**: WHEN a user opens `/`, the home header SHALL show the version of the application.
+- **R13**: WHEN a user opens a page on a screen 375 CSS pixels wide, the menu SHALL wrap its links, also when the features add links, and the page SHALL have no horizontal scroll.
 
 ## Expected URLs and APIs
 
 | Kind | Project | Address | Expected answer | Requirements |
 | --- | --- | --- | --- | --- |
-| page | front | `/` | Shell header with the name, menu, theme control; home header with the name, the description, the version, and the card grid | R01–R04, R06–R12 |
+| page | front | `/` | Shell header with the name, menu, theme control; home header with the name, the description, the version, and the card grid | R01–R04, R06–R13 |
 | page | front | `/{unknown}` | Not-found page with the path and a link to `/` | R05, R09 |
 
 ## Solution
@@ -71,3 +72,4 @@ Each page of the `front` must have the same frame, in the theme that the user se
 - **R06**: set the color preference of the browser, not of the operating system, and use a new context for each preference.
 - **R10, R11**: read the browser console.
 - **R12**: the version is the version of the root `package.json`.
+- **R13**: add links to the menu in the page, as features do; the width of the document is not more than the width of the viewport.
