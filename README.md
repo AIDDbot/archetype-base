@@ -24,7 +24,7 @@ Then put the identity of your system in the root `package.json` (`displayName`, 
 
 ## Versions
 
-Archetype Base has the same version as AIDDbot, patch included: AIDDbot 0.3.3 pins `v0.3.3`. Each AIDDbot release publishes Archetype Base first with its version, also when nothing changed here. Use that tag in the copy command, for example `npx degit AIDDbot/archetype-base/back#v0.3.0 back`.
+Archetype Base has the same version as AIDDbot, patch included: AIDDbot {version} pins `v{version}`. Each AIDDbot release publishes Archetype Base first with its version, also when nothing changed here. Use that tag in the copy command, for example `npx degit AIDDbot/archetype-base/back#v{version} back`.
 
 ## Run the archetypes
 

@@ -4,6 +4,7 @@ Reference archetypes that follow the AIDDbot Blueprint. Each project folder is o
 
 - Write `AGENTS.md` files, specs and other records in ASD-STE100 Simplified Technical English: short sentences, one statement in each sentence, active voice, and one word for one concept. Technical names are permitted.
 - When a request is ambiguous or incomplete, ask one closed question at a time.
+- Write code, tests and the texts of the user interface in English. The archetypes have no translations.
 
 ## Environment
 
