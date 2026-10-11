@@ -25,13 +25,13 @@ All archetypes implement the AIDDbot foundation specs. `foundation/` holds the i
 
 ## Blueprint
 
-<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.9 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
+<!-- Copied as written from AIDDbot `outline-system/assets/AGENTS.template.md`, v0.3.11 (Columbus). Never change it here: change it in AIDDbot and copy it again. -->
 
 All projects obey these principles. A project `AGENTS.md` gives only its own data and the limits that its archetype changes. Do not explore the code to learn the setup. First make it work, then make it correct: only `lint`, `unit` and acceptance block a delivery, and a security finding gets one repair first. Any other violation is debt.
 
 ### System
 
-- `back-api` owns the data. Only it connects to persistence. `front-web` and `cli` get data only through `back-api`.
+- `back-api` owns the data. Only it connects to persistence. `front-web` and `cli` get data only through `back-api`. Exception: an application in a system with no `back-api`, such as a `cli`, a desktop or a mobile application, owns its local data.
 - REST API: paths start with `/api`; a resource is a plural noun. JSON bodies, ISO 8601 dates, `Authorization: Bearer <token>`. Status codes: 200, 201, 204, 400, 401, 403, 404, 409, 413, 500. Every error has the body `{ "error": "<message>" }`; an input error adds `fields`. An error never shows a stack, SQL or a path.
 - Security: no secrets in the code or the repository; a password only as a salted hash; check each input at the edge.
 
@@ -59,8 +59,8 @@ All projects obey these principles. A project `AGENTS.md` gives only its own dat
 
 - Unit tests prove `logic`, at least one for each business rule, with a fake `data`. They also prove `shared` and `core`. They are fast and independent. A business rule without a unit test is debt.
 - An acceptance test proves one requirement. Its name contains the identifier of that requirement.
-- `e2e` has no layers, no manifest and no composition; the runner is the entry. `core` is the life cycle of the suite (setup, teardown, startup check of the projects). Features: one folder for each feature of the system, with `.api.spec` and `.web.spec` tests. `shared`: primitives, `page-objects/`, `test-data/`.
-- An e2e test uses only the API and the screens. It never uses `core` or a different feature. Each test makes its own data with unique values. One browser engine (Chromium), unless the system asks for more.
+- `e2e` has no layers, no manifest and no composition; the runner is the entry. `core` is the life cycle of the suite (setup, teardown, startup check of the projects). Features: one folder for each feature of the system, with `.api.spec`, `.web.spec` and `.cli.spec` tests. `shared`: primitives, `page-objects/`, `test-data/`.
+- An e2e test uses only the API, the screens and the commands. It never uses `core` or a different feature. Only the migration tests of `configuration` open the database. Each test makes its own data with unique values. One browser engine (Chromium), unless the system asks for more.
 
 ### Code
 
