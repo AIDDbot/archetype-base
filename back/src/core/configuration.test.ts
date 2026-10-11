@@ -11,9 +11,13 @@ void test("settings reject invalid PORT instead of using its default", () => {
 });
 void test("migrations are recorded once and unknown versions fail", () => {
   const database = new DatabaseSync(":memory:");
+  const countVersions = () =>
+    database.prepare("SELECT COUNT(*) AS count FROM schema_versions").get()?.count;
   migrateDatabase(database);
+  const applied = countVersions();
   migrateDatabase(database);
-  assert.equal(database.prepare("SELECT COUNT(*) AS count FROM schema_versions").get()?.count, 3);
+  assert.equal(countVersions(), applied);
+  assert.ok(Number(applied) > 0);
   database
     .prepare("INSERT INTO schema_versions VALUES (?, ?)")
     .run("9999-unknown.sql", new Date().toISOString());

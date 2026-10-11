@@ -1,17 +1,17 @@
 import type { Page } from "@playwright/test";
+import { recordForm } from "./record.page.ts";
 
 export function authPage(page: Page) {
+  const form = recordForm(page.locator("auth-form"));
   return {
-    email: page.getByLabel("Email", { exact: true }),
-    name: page.getByLabel("Name", { exact: true }),
-    password: page.getByLabel("Password", { exact: true }),
-    submit: page.locator("auth-form button[type=submit]"),
-    result: page.locator("#form-result"),
+    email: form.field("Email"),
+    name: form.field("Name"),
+    password: form.field("Password"),
+    submit: form.submit,
+    result: form.result,
     async fill(values: { email: string; name?: string; password: string }) {
-      await page.getByLabel("Email", { exact: true }).fill(values.email);
-      if (values.name !== undefined)
-        await page.getByLabel("Name", { exact: true }).fill(values.name);
-      await page.getByLabel("Password", { exact: true }).fill(values.password);
+      const name = values.name === undefined ? {} : { Name: values.name };
+      await form.fill({ Email: values.email, ...name, Password: values.password });
     },
   };
 }

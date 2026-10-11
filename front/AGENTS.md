@@ -74,7 +74,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 | `formatDate(value)` | Date and time in the language of the browser. | `src/shared/date.format.ts` |
 | `formatDuration(seconds)` | Readable duration with `Intl.DurationFormat`. | `src/shared/duration.format.ts` |
 | `formatFact(kind, value)`, `isEndAligned(kind)`, `listMessage(count, empty)` | A fact that a person reads, `—` with no value; end alignment for numbers, dates and durations; the empty message of a list. | `src/shared/record.format.ts` |
-| `createRecordForm(tag)`, `show(description)`, `onSubmit(submit, fallback)` | A form from a description of its fields: labels, required controls, each field error next to its control (`aria-describedby`, `aria-invalid`), one submission at a time with a busy state, the result or a readable error. Use it for each form; never build one of your own. | `src/shared/components/record.form.ts` |
+| `createRecordForm(tag)`, `show(description)`, `onSubmit(submit, fallback)` | A form from a description of its fields: labels, required controls, each field error next to its control (`aria-describedby`, `aria-invalid`), one submission at a time with a busy state, the result or a readable error. Ids are unique for each form, so a page can have many forms; tests find `[data-result]` and `[data-field="{name}"]` in the form. Use it for each form; never build one of your own. | `src/shared/components/record.form.ts` |
 | `ExpectedError(details)` | Status, message and optional field errors. | `src/shared/error.type.ts` |
 | `HttpClient` | The contract of the HTTP client of `core`. | `src/shared/http.type.ts` |
 | `ActionLogger.action(name, path)` | The contract of the console logger of `core`: one named action. | `src/shared/logger.type.ts` |
@@ -97,6 +97,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 - Install Pico CSS and the three Fontsource packages with npm. Import them in the entry.
 - Copy theme.css, colors.css and custom.css unchanged from the foundation assets to src/core/styles/. Import them after Pico.
 - Store the theme in the root data-theme attribute and localStorage. Read prefers-color-scheme for the initial theme.
+- `mount` only composes named steps: read the context, build each view, connect the events, load the data. Write each step as a function in the same file. Each form, table or card of a page gets its own step. When a block is inside a loop or a condition, move the block to a named function.
 
 ### Project rules
 

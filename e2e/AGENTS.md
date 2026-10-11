@@ -68,6 +68,7 @@ The index of `shared`. Read it before you write a check or a conversion. Add eac
 | --- | --- | --- |
 | `authClient(request, baseUrl)` | Register, login and resolve the current user through HTTP. | `shared/auth.client.ts` |
 | `uniqueCredentials()` | Unique email and password for an isolated account. | `shared/auth.client.ts` |
+| `recordForm(scope)` | Each form of `createRecordForm`: `field(label)`, `submit`, `result`, `error(name)`, and `fill` or `send` of values by label. Use it for each form step; never repeat fill steps in a spec. | `shared/page-objects/record.page.ts` |
 | `authPage(page)` | Auth fields, submit, result and fill operation. | `shared/page-objects/auth.page.ts` |
 | `expectError(body, message?)` | Check the uniform error body and optional fields. | `shared/error.check.ts` |
 | `uniqueValue(prefix)` | A value no other test run uses. | `shared/test-data/unique.value.ts` |

@@ -14,6 +14,7 @@ export interface RecordFormDescription {
   fields: readonly FormField[];
 }
 export type FormSubmit = (values: Record<string, string>) => Promise<string>;
+let formCount = 0;
 
 function createControl(field: FormField) {
   if (field.options) {
@@ -26,13 +27,13 @@ function createControl(field: FormField) {
   if (field.autocomplete) input.autocomplete = field.autocomplete as AutoFill;
   return input;
 }
-function createField(field: FormField) {
+function createField(field: FormField, key: string) {
   const control = createControl(field);
   control.name = field.name;
   control.required = true;
-  control.setAttribute("aria-describedby", `${field.name}-error`);
+  control.setAttribute("aria-describedby", `${key}-${field.name}-error`);
   const message = document.createElement("small");
-  Object.assign(message, { id: `${field.name}-error`, role: "status" });
+  Object.assign(message, { id: `${key}-${field.name}-error`, role: "status" });
   message.dataset.field = field.name;
   const label = document.createElement("label");
   label.append(field.label, control, message);
@@ -52,8 +53,10 @@ export class RecordForm extends PlatformElement {
     const button = document.createElement("button");
     Object.assign(button, { type: "submit", textContent: description.submit });
     const result = document.createElement("p");
-    Object.assign(result, { id: "form-result", role: "status" });
-    form.append(...description.fields.map(createField), button, result);
+    result.role = "status";
+    result.dataset.result = "";
+    const key = `${this.localName}-${++formCount}`;
+    form.append(...description.fields.map((field) => createField(field, key)), button, result);
     this.replaceChildren(title, form);
   }
   onSubmit(submit: FormSubmit, fallback: string) {
@@ -67,7 +70,7 @@ export class RecordForm extends PlatformElement {
     this.setBusy(true);
     this.clearErrors();
     try {
-      this.piece("#form-result").textContent = await submit(this.values());
+      this.piece("[data-result]").textContent = await submit(this.values());
     } catch (error) {
       this.fail(error, fallback);
     } finally {
@@ -92,10 +95,10 @@ export class RecordForm extends PlatformElement {
   }
   fail(error: unknown, fallback: string) {
     const expected = error instanceof ExpectedError;
-    this.piece("#form-result").textContent = expected ? error.message : fallback;
+    this.piece("[data-result]").textContent = expected ? error.message : fallback;
     if (!expected) return;
     for (const [name, message] of Object.entries(error.details.fields ?? {})) {
-      const field = this.querySelector(`#${name}-error`);
+      const field = this.querySelector(`[data-field="${name}"]`);
       if (field) field.textContent = message;
       this.querySelector(`[name="${name}"]`)?.setAttribute("aria-invalid", "true");
     }
