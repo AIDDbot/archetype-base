@@ -21,9 +21,8 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 | `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
 | `format` | No | `npm run format` | oxfmt |
 | `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
-| `unit` | Yes | `npm run unit` | node --test lifecycle checks |
-| `start` | No | n/a: the suite starts its projects | n/a |
-| `acceptance` | Yes | `npm test` | Playwright |
+| `test` | Yes | `npm test` | node --test for the suite core, then Playwright, headless; forwards `--grep @S{nnnn}-` |
+| `start` | No | `npm start` | The interactive Playwright UI, for a human only. An agent never runs it. |
 | `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits |
 
 `npm start` opens the interactive Playwright UI. It is for a human only: an agent never runs it, because it does not stop.

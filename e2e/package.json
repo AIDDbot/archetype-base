@@ -8,11 +8,10 @@
   "main": "index.js",
   "scripts": {
     "start": "playwright test --ui",
-    "test": "playwright test",
+    "test": "node --test core/**/*.test.ts && playwright test",
     "lint": "oxlint .",
     "format": "oxfmt .",
     "upgrade": "ncu -u && npm install",
-    "unit": "node --test core/**/*.test.ts",
     "quality": "oxlint -c .oxlint.quality.json ."
   },
   "devDependencies": {

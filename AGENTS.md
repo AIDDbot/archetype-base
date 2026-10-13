@@ -86,8 +86,8 @@ All projects obey these principles. A project `AGENTS.md` gives only its own dat
 
 An archetype enters or changes in this repository only when all of these are true:
 
-- `lint`, `unit` and `quality` pass in each project, and `quality` reports no warning.
-- The full acceptance run of `e2e` passes against the reference `back` and `front`.
+- `lint`, `test` and `quality` pass in each project, and `quality` reports no warning.
+- The `test` of `e2e`, the full acceptance run, passes against the reference `back` and `front`.
 - Each requirement in `foundation/` has a test with its tag, and each tag names a requirement in `foundation/`.
 - The schema documents in `model/` match the code: the model, the tables of `back`, and the endpoints of `back` and `front`. AIDDbot copies them into each system and never derives them again.
 - The archetype has no open technical debt. Debt in an archetype goes into each system that starts from it.
