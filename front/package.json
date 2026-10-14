@@ -6,11 +6,14 @@
   "scripts": {
     "start": "node server.ts",
     "build": "vite build",
-    "lint": "oxlint src server.ts",
+    "lint": "oxlint --quiet src server.ts",
+    "lint:files": "oxlint --quiet",
     "format": "oxfmt .",
     "upgrade": "ncu -u && npm install",
     "test": "node --test src/**/*.test.ts",
-    "quality": "oxlint -c .oxlint.quality.json src server.ts"
+    "test:files": "node --test",
+    "quality": "oxlint -c .oxlint.quality.json src server.ts",
+    "harden": "oxlint src server.ts"
   },
   "dependencies": {
     "@fontsource/anonymous-pro": "^5.3.0",

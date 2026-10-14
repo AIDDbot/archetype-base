@@ -18,12 +18,15 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 | Slot | Blocks | Command | Tool |
 | --- | --- | --- | --- |
-| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
+| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries; errors only (`--quiet`) |
+| `lint:files` | Yes | `npm run lint:files` | the same `lint`, on the files that the core gives |
 | `format` | No | `npm run format` | oxfmt |
 | `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
 | `test` | Yes | `npm test` | node --test |
+| `test:files` | Yes | `npm run test:files` | node --test, on the test files that the core gives |
 | `start` | No | `npm start` | Node.js |
-| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits |
+| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits only, never the warnings of `lint` |
+| `harden` | No | `npm run harden` | oxlint without `--quiet`: the warnings of `lint`, as the final polish |
 
 ## 4 · Architecture
 

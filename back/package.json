@@ -8,11 +8,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.main.ts",
-    "lint": "oxlint src",
+    "lint": "oxlint --quiet src",
+    "lint:files": "oxlint --quiet",
     "format": "oxfmt .",
     "upgrade": "ncu -u && npm install",
     "test": "node --test src/**/*.test.ts",
-    "quality": "oxlint -c .oxlint.quality.json src"
+    "test:files": "node --test",
+    "quality": "oxlint -c .oxlint.quality.json src",
+    "harden": "oxlint src"
   },
   "dependencies": {
     "express": "^5.2.1"

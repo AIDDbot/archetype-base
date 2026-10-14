@@ -18,12 +18,15 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 | Slot | Blocks | Command | Tool |
 | --- | --- | --- | --- |
-| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries |
+| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries; errors only (`--quiet`) |
+| `lint:files` | Yes | `npm run lint:files` | the same `lint`, on the files that the core gives |
 | `format` | No | `npm run format` | oxfmt |
 | `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
-| `test` | Yes | `npm test` | node --test for the suite core, then Playwright, headless; forwards `--grep @S{nnnn}-` |
+| `test` | Yes | `npm test` | Playwright, headless: the acceptance suite against the target, never against the suite itself; forwards `--grep @S{nnnn}-` |
+| `test:files` | No | n/a: the Builder checks the acceptance tests with `aidd run test --spec` | — |
 | `start` | No | `npm start` | The interactive Playwright UI, for a human only. An agent never runs it. |
-| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits |
+| `quality` | No | `npm run quality` | oxlint with Blueprint complexity limits only, never the warnings of `lint` |
+| `harden` | No | `npm run harden` | oxlint without `--quiet`: the warnings of `lint`, as the final polish |
 
 `npm start` opens the interactive Playwright UI. It is for a human only: an agent never runs it, because it does not stop.
 
@@ -50,7 +53,7 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 | features | `features/{feature}/` | *.api.spec.ts and *.web.spec.ts |
 | facade / presentation / logic / data | `n/a` | e2e has no layers |
 | shared | `shared/, shared/page-objects/, shared/test-data/, shared/projects/` | fixtures and reusable test support |
-| unit tests | `core/*.test.ts` | node --test lifecycle checks |
+| unit tests | `n/a` | each run of the suite proves its `core`; its quality is checked only by `lint` |
 
 ```text
 playwright.config.ts

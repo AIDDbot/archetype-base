@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "extends": ["./.oxlintrc.json"],
+  "categories": { "correctness": "off" },
+  "ignorePatterns": ["node_modules"],
   "rules": {
     "eslint/complexity": [
       "warn",

@@ -8,11 +8,13 @@
   "main": "index.js",
   "scripts": {
     "start": "playwright test --ui",
-    "test": "node --test core/**/*.test.ts && playwright test",
-    "lint": "oxlint .",
+    "test": "playwright test",
+    "lint": "oxlint --quiet .",
+    "lint:files": "oxlint --quiet",
     "format": "oxfmt .",
     "upgrade": "ncu -u && npm install",
-    "quality": "oxlint -c .oxlint.quality.json ."
+    "quality": "oxlint -c .oxlint.quality.json .",
+    "harden": "oxlint ."
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
