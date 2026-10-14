@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node server.ts",
     "build": "vite build",
-    "lint": "oxlint --quiet src server.ts",
-    "lint:files": "oxlint --quiet",
-    "format": "oxfmt .",
+    "lint": "oxlint --quiet --fix src server.ts",
+    "lint:files": "oxlint --quiet --fix",
+    "format": "oxfmt --write .",
     "upgrade": "ncu -u && npm install",
     "test": "node --test src/**/*.test.ts",
     "test:files": "node --test",

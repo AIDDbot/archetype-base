@@ -18,9 +18,9 @@ Obey the Blueprint of the root `AGENTS.md`. This file gives only the data of thi
 
 | Slot | Blocks | Command | Tool |
 | --- | --- | --- | --- |
-| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries; errors only (`--quiet`) |
+| `lint` | Yes | `npm run lint` | oxlint, typeAware, typeCheck, oxlint-tsgolint, layer boundaries; errors only (`--quiet`), safe fixes applied (`--fix`) |
 | `lint:files` | Yes | `npm run lint:files` | the same `lint`, on the files that the core gives |
-| `format` | No | `npm run format` | oxfmt |
+| `format` | No | `npm run format` | oxfmt, writes the files (`--write`); runs after `lint` |
 | `upgrade` | No | `npm run upgrade` | npm-check-updates and npm install |
 | `test` | Yes | `npm test` | Playwright, headless: the acceptance suite against the target, never against the suite itself; forwards `--grep @S{nnnn}-` |
 | `test:files` | No | n/a: the Builder checks the acceptance tests with `aidd run test --spec` | — |
